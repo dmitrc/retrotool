@@ -1,19 +1,32 @@
 import { createElement } from 'react';
-import { ItemProps } from './../types';
+import { ItemProps, ItemListProps } from './../types';
 import { Item } from './Item';
 import { Loading } from './Loading';
+import { Error } from './Error';
 import { useFetch } from './../hooks/useFetch';
 
-export const ItemList = () => {
+export const ItemList = (props: ItemListProps) => {
   let { data, loading, error } = useFetch<ItemProps[]>('http://localhost:3000/items');
+
   if (loading) {
-    return <Loading />;
+    return (
+      <Loading />
+    )
   }
   if (error) {
-    return <div className="error">{error}</div>;
+    return (
+      <Error msg={error} />
+    )
   }
   if (data) {
-    return <div>{ data.map(item => <Item {...item} key={item.id} />) }</div>;
+    const items = props.filter ? data.filter(props.filter) : data;
+    return (
+      <div>
+        {items.map(item => 
+          <Item {...item} key={item.id} />
+        )}
+      </div>
+    )
   }
   return null;
 }

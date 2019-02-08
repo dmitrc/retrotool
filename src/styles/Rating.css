@@ -1,0 +1,9 @@
+.rating > span {
+    margin: 0 10px;
+    font-size: 20px;
+}
+
+.rating > * {
+    display: inline-block;
+    vertical-align: middle;
+}

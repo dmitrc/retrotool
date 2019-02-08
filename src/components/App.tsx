@@ -9,7 +9,7 @@ export const App = () => {
     return (
         <div>
             <ItemBuilder handleAdd={console.log} />
-            <ItemList />
+            <ItemList filter={i => true} />
         </div>
     );
 };

@@ -1,25 +1,26 @@
 import { createElement } from "react";
-import { ItemProps, IconProps } from "./../types";
+import { ItemProps } from "./../types";
+import { Person } from "./Person";
+import { Rating } from "./Rating";
+import { Tag } from "./Tag";
 import "./../styles/Item.css";
-
-import * as MdThumbsUp from "react-ionicons/lib/MdThumbsUp";
-import * as MdThumbsDown from "react-ionicons/lib/MdThumbsDown";
-
 
 export const Item = (props: ItemProps) => {
     return (
         <div className={"item " + (props.actionItem && "action") + (props.complete && "complete")}>
             <div className="title">{props.title}</div>
             <div className="date">{props.date}</div>
-            <div className="owner">{props.owner || "No owner assigned"}</div>
+            
+            <Person alias={props.owner} />
+            
             <div className="actionitem">{props.actionItem || "No action item(s)"}</div>
-            <div className="rating">
-                <button className="downvote"><MdThumbsDown color="#fff" size="20px" /></button>
-                <span>{props.rating || 0}</span>
-                <button className="upvote"><MdThumbsUp color="#fff" size="20px" /></button>
-            </div>
+
+            <Rating value={props.rating || 0} />
+
             <div className="tags">
-            { props.tags && props.tags.map( tag => <div className="tag" key={tag.name} style={{background: tag.color}}>{tag.name}</div> )}
+            { props.tags && props.tags.map((tag,i) =>
+                <Tag name={tag.name} color={tag.color} key={i} /> 
+            )}
             </div>
         </div>
     )

@@ -1,0 +1,84 @@
+.iconb {
+    background: #ccc;
+    color: #000;
+    border-radius: 18px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+}
+
+.iconb svg {
+    fill: #000;
+}
+
+.iconb:hover {
+    background: #bbb;
+}
+
+.iconb svg {
+    margin: 7px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.iconb span {
+    margin: 0 7px 0 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Dark theme */
+.iconb.dark {
+    background: #333;
+    color: #fff;
+}
+
+.iconb.dark svg {
+    fill: #fff;
+}
+
+.iconb.dark:hover {
+    background: #555;
+}
+
+/* Dnager (red) theme */
+.iconb.danger {
+    background: #900;
+    color: #fff;
+}
+
+.iconb.danger svg {
+    fill: #fff;
+}
+
+.iconb.danger:hover {
+    background: #b00;
+}
+
+/* Success (green) theme */
+.iconb.success {
+    background: #090;
+    color: #fff;
+}
+
+.iconb.success svg {
+    fill: #fff;
+}
+
+.iconb.success:hover {
+    background: #0b0;
+}
+
+/* Info (blue) theme */
+.iconb.info {
+    background: #009;
+    color: #fff;
+}
+
+.iconb.info svg {
+    fill: #fff;
+}
+
+.iconb.info:hover {
+    background: #00b;
+}
