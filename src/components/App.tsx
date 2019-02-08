@@ -8,7 +8,7 @@ import { createElement } from 'react';
 export const App = () => {
     return (
         <div>
-            <ItemBuilder />
+            <ItemBuilder handleAdd={console.log} />
             <ItemList />
         </div>
     );

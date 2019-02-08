@@ -3,17 +3,41 @@
         {
             "id": 1,
             "title": "Lorem ipsum",
-            "date": "Jan 2019"
+            "date": "Jan 2019",
+            "tags": [
+                {
+                    "name": "Overdue",
+                    "color": "darkorange"
+                }, 
+                {
+                    "name": "Has action item",
+                    "color": "red"
+                }
+            ],
+            "actionItem": "Add test coverage for Foo",
+            "owner": "satyan"
         },
         {
             "id": 2,
             "title": "Lorem ipsum",
-            "date": "Jan 2019"
+            "date": "Jan 2019",
+            "tags": [
+                {
+                    "name": "Discussion",
+                    "color": "navy"
+                }
+            ]
         },
         {
             "id": 3,
             "title": "Lorem ipsum",
-            "date": "Jan 2019"
+            "date": "Jan 2019",
+            "tags": [
+                {
+                    "name": "Vote",
+                    "color": "indigo"
+                }
+            ]
         },
         {
             "id": 4,

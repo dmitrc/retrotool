@@ -11,11 +11,13 @@ export function useFetch<T>(url: string,) {
         }
         setLoading(true);
 
-        fetch(url)
-            .then(response => response.json())
-            .then(json => setData(json))
-            .catch(err => setError(err))
-            .then(() => setLoading(false));
+        setTimeout(() => {
+            fetch(url)
+                .then(response => response.json())
+                .then(json => setData(json))
+                .catch(err => setError(err))
+                .then(() => setLoading(false));
+        }, 1000);
     }, [url]);
 
     return { data, loading, error };

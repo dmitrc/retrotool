@@ -2,8 +2,8 @@ import { createElement } from "react";
 import { ItemProps, IconProps } from "./../types";
 import "./../styles/Item.css";
 
-import MdThumbsUp from "react-ionicons/lib/MdThumbsUp";
-import MdThumbsDown from "react-ionicons/lib/MdThumbsDown";
+import * as MdThumbsUp from "react-ionicons/lib/MdThumbsUp";
+import * as MdThumbsDown from "react-ionicons/lib/MdThumbsDown";
 
 
 export const Item = (props: ItemProps) => {
@@ -19,7 +19,7 @@ export const Item = (props: ItemProps) => {
                 <button className="upvote"><MdThumbsUp color="#fff" size="20px" /></button>
             </div>
             <div className="tags">
-            { props.tags && props.tags.map( tag => <div className="tag" key={tag}>{tag}</div> )}
+            { props.tags && props.tags.map( tag => <div className="tag" key={tag.name} style={{background: tag.color}}>{tag.name}</div> )}
             </div>
         </div>
     )

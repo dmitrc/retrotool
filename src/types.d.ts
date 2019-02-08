@@ -6,7 +6,7 @@ export interface ItemProps {
   date: string,
   rating?: number,
   owner?: string,
-  tags?: string[],
+  tags?: TagProps[],
   actionItem?: string,
   complete?: boolean
 }
@@ -19,4 +19,13 @@ export interface IconProps {
   shake?: boolean,
   beat?: boolean,
   onClick?: () => void
+}
+
+export interface TagProps {
+  name: string,
+  color: string
+}
+
+export interface IconButtonProps {
+
 }
