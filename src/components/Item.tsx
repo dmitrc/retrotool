@@ -1,16 +1,10 @@
-import * as React from "react";
+import { createElement } from "react";
+import { ItemProps, IconProps } from "./../types";
 import "./../styles/Item.css";
 
-export interface ItemProps {
-    id: number,
-    title: string,
-    date: string,
-    rating?: number,
-    owner?: string,
-    tags?: string[],
-    actionItem?: string,
-    complete?: boolean
-};
+import MdThumbsUp from "react-ionicons/lib/MdThumbsUp";
+import MdThumbsDown from "react-ionicons/lib/MdThumbsDown";
+
 
 export const Item = (props: ItemProps) => {
     return (
@@ -20,9 +14,9 @@ export const Item = (props: ItemProps) => {
             <div className="owner">{props.owner || "No owner assigned"}</div>
             <div className="actionitem">{props.actionItem || "No action item(s)"}</div>
             <div className="rating">
-                <button className="upvote">+</button>
+                <button className="downvote"><MdThumbsDown color="#fff" size="20px" /></button>
                 <span>{props.rating || 0}</span>
-                <button className="downvote">-</button>
+                <button className="upvote"><MdThumbsUp color="#fff" size="20px" /></button>
             </div>
             <div className="tags">
             { props.tags && props.tags.map( tag => <div className="tag" key={tag}>{tag}</div> )}

@@ -2,10 +2,11 @@
   "compilerOptions": {
       "outDir": "./dist/",
       "sourceMap": true,
-      "noImplicitAny": true,
+    //   "noImplicitAny": true,
       "module": "commonjs",
       "target": "es2015",
-      "jsx": "react"
+      "jsx": "react",
+      "jsxFactory": "createElement"
   },
   "include": [
       "./src/**/*"
