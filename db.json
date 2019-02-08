@@ -10,7 +10,7 @@
                     "color": "darkorange"
                 }, 
                 {
-                    "name": "Has action item",
+                    "name": "Action item",
                     "color": "red"
                 }
             ],
@@ -42,7 +42,13 @@
         {
             "id": 4,
             "title": "Lorem ipsum",
-            "date": "Jan 2019"
+            "date": "Jan 2019",
+            "tags": [
+                {  
+                    "name": "Triage",
+                    "color": "darkgreen"
+                }
+            ]
         },
         {
             "id": 5,

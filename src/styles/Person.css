@@ -1,5 +1,19 @@
+.person {
+    position: relative;
+}
+
 .person img {
-    width: 32px;
-    height: 32px;
-    margin-right: 10px;
+    width: 80px;
+}
+
+.person span {
+    width: 80px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 2px 2px 5px 2px;
+    background: rgba(255,255,255,.6);
+    font-size: 11px;
+    text-align: center;
+    text-transform: uppercase;
 }

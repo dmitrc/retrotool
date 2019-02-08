@@ -15,7 +15,7 @@ export const ItemList = (props: ItemListProps) => {
   }
   if (error) {
     return (
-      <Error msg={error} />
+      <Error text={error} />
     )
   }
   if (data) {

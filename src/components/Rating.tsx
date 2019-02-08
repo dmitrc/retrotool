@@ -15,15 +15,21 @@ export const Rating = (props: RatingProps) => {
     const valueDiff = activeUp ? 1 : (activeDown ? -1 : 0);
 
     const handleUp = () => {
-        const newVal = activeUp ? RatingStatus.NotSet : RatingStatus.Like;
-        setRating(newVal);
-        props.onChange && props.onChange(newVal);
+        setRating(prevVal => {
+            const newVal = (prevVal == RatingStatus.Like) ? RatingStatus.NotSet : RatingStatus.Like;
+
+            props.onChange && props.onChange(newVal, prevVal);
+            return newVal;
+        });
     }
 
     const handleDown = () => {
-        const newVal = activeDown ? RatingStatus.NotSet : RatingStatus.Dislike;
-        setRating(newVal);
-        props.onChange && props.onChange(newVal);
+        setRating(prevVal => {
+            const newVal = (prevVal == RatingStatus.Dislike) ? RatingStatus.NotSet : RatingStatus.Dislike;
+
+            props.onChange && props.onChange(newVal, prevVal);
+            return newVal;
+        });
     }
 
     return (

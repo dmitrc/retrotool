@@ -8,19 +8,29 @@ import "./../styles/Item.css";
 export const Item = (props: ItemProps) => {
     return (
         <div className={"item " + (props.actionItem && "action") + (props.complete && "complete")}>
-            <div className="title">{props.title}</div>
-            <div className="date">{props.date}</div>
+            <div className="c1">
+                <div className="date">{props.date}</div>
+                <Person alias={props.owner} />
+                <Rating value={props.rating || 0} />
+            </div>
             
-            <Person alias={props.owner} />
+            <div className="c2">  
+                <div className="title">{props.title}</div>
+                { props.actionItem ? (
+                    <div className="action">
+                        <span className="actionDesc">Action item: </span>
+                        <span className="actionVal">{props.actionItem}</span>
+                    </div>
+                ) : null}
+            </div>
             
-            <div className="actionitem">{props.actionItem || "No action item(s)"}</div>
-
-            <Rating value={props.rating || 0} />
-
-            <div className="tags">
-            { props.tags && props.tags.map((tag,i) =>
-                <Tag name={tag.name} color={tag.color} key={i} /> 
-            )}
+            <div className="c3">
+                <div className="tags">
+                { props.tags && props.tags.map((tag,i) =>
+                    <Tag name={tag.name} color={tag.color} key={i} /> 
+                )}
+                </div>
+            
             </div>
         </div>
     )

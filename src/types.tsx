@@ -37,7 +37,7 @@ export enum RatingStatus {
 
 export interface RatingProps {
   value?: number,
-  onChange?: (status: RatingStatus) => void
+  onChange?: (status: RatingStatus, prevStatus?: RatingStatus) => void
 }
 
 export interface PersonProps {
@@ -51,7 +51,7 @@ export interface TagProps {
 }
 
 export interface ErrorProps {
-  msg: string
+  text: string
 }
 
 export interface ItemListProps {
