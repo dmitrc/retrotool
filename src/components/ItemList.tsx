@@ -1,5 +1,5 @@
 import { createElement } from 'react';
-import { ItemProps, ItemListProps } from './../types';
+import { ItemProps, ItemListProps } from '../types/types';
 import { Item } from './Item';
 import { Loading } from './Loading';
 import { Error } from './Error';

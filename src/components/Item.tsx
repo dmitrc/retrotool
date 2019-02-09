@@ -1,5 +1,5 @@
 import { createElement } from "react";
-import { ItemProps } from "./../types";
+import { ItemProps } from "../types/types";
 import { Person } from "./Person";
 import { Rating } from "./Rating";
 import { Tag } from "./Tag";
@@ -22,6 +22,13 @@ export const Item = (props: ItemProps) => {
                         <span className="actionVal">{props.actionItem}</span>
                     </div>
                 ) : null}
+                { props.notes ? (
+                        <div className="notes">
+                            <span className="notesDesc">Notes: </span>
+                            <ul>{ props.notes.map((note, i) => <li className="note" key={i}>{note}</li>) }</ul>
+                        </div>
+                    ) : null
+                }
             </div>
             
             <div className="c3">

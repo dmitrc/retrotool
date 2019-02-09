@@ -1,5 +1,5 @@
 import { createElement, useRef } from "react";
-import { ItemProps } from "./../types";
+import { ItemProps } from "../types/types";
 import "./../styles/ItemBuilder.css";
 
 export interface ItemBuilderProps {

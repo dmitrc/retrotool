@@ -16,11 +16,17 @@ module.exports = {
 
   module: {
       rules: [
-          // All files with a '.ts' or '.tsx' extension will be handled by 'awesome-typescript-loader'.
-          { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
-
-          // All files with a '.css' extension will be handled by both 'style-loader' and 'css-loader'
-          { test: /\.css$/, use: ["style-loader", "css-loader"]},
+        { test: /\.tsx?$/, loader: "awesome-typescript-loader" },
+        { test: /\.css$/, use: ["style-loader", "css-loader"]},
+        { test: /\.(png|jp(e*)g|svg)$/,  
+            use: [{
+                loader: 'url-loader',
+                options: { 
+                    limit: 8000, // Convert images < 8kb to base64 strings
+                    name: './src/images/[name].[ext]'
+                } 
+            }]
+        },
 
           // All output '.js' files will have any sourcemaps re-processed by 'source-map-loader'.
           { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }

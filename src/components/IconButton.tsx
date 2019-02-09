@@ -1,5 +1,5 @@
 import { createElement } from "react";
-import { IconButtonProps } from "../types";
+import { IconButtonProps } from "../types/types";
 import "./../styles/IconButton.css";
 
 export const IconButton = (props: IconButtonProps) => {

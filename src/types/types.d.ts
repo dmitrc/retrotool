@@ -8,6 +8,7 @@ export interface ItemProps {
   owner?: string,
   tags?: TagProps[],
   actionItem?: string,
+  notes?: string[],
   complete?: boolean
 }
 
@@ -29,7 +30,7 @@ export interface IconButtonProps {
   onClick?: () => void
 }
 
-export enum RatingStatus {
+export const enum RatingStatus {
   NotSet,
   Dislike,
   Like 

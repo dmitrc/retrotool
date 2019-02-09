@@ -5,10 +5,14 @@
     border-radius: 10px;
     margin: 20px 0;
     display: flex;
+    flex-flow: row;
 }
 
 .item .c1 {
-    width: 124px;
+    width: 144px;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
 }
 
 .item .c2 {
@@ -26,7 +30,25 @@
     font-weight: 500;
 }
 
-.actionDesc {
+.item .date {
+    margin-bottom: 10px;
+}
+
+.item .person {
+    margin-bottom: 10px;
+}
+
+.item .action,
+.item .notes {
+    margin-top: 10px;
+}
+
+.item .actionDesc {
     font-weight: 600;
     color: #900;
+}
+
+.item .notesDesc {
+    font-weight: 600;
+    color: #009;
 }

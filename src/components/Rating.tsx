@@ -1,5 +1,5 @@
 import { createElement, useState } from "react";
-import { RatingProps, RatingStatus } from "./../types";
+import { RatingProps, RatingStatus } from "../types/types";
 import { IconButton } from "./IconButton";
 import "./../styles/Rating.css";
 

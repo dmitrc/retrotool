@@ -1,5 +1,5 @@
 import { createElement } from "react";
-import { TagProps } from "./../types";
+import { TagProps } from "../types/types";
 import "./../styles/Tag.css";
 
 export const Tag = (props: TagProps) => {

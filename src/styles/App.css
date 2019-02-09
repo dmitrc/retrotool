@@ -7,6 +7,10 @@ body {
     background: #efefef;
 }
 
+ul {
+    margin: 0;
+}
+
 button {
     border: 0;
     padding: 0;
