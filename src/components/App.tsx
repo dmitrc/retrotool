@@ -8,7 +8,7 @@ import { createElement } from 'react';
 export const App = () => {
     return (
         <div>
-            <ItemBuilder handleAdd={console.log} />
+            <ItemBuilder />
             <ItemList filter={i => true} />
         </div>
     );

@@ -22,7 +22,7 @@ export const Item = (props: ItemProps) => {
                         <span className="actionVal">{props.actionItem}</span>
                     </div>
                 ) : null}
-                { props.notes ? (
+                { props.notes && props.notes.length > 0 ? (
                         <div className="notes">
                             <span className="notesDesc">Notes: </span>
                             <ul>{ props.notes.map((note, i) => <li className="note" key={i}>{note}</li>) }</ul>
@@ -32,11 +32,13 @@ export const Item = (props: ItemProps) => {
             </div>
             
             <div className="c3">
-                <div className="tags">
-                { props.tags && props.tags.map((tag,i) =>
-                    <Tag name={tag.name} color={tag.color} key={i} /> 
-                )}
-                </div>
+                { props.tags && props.tags.length > 0 ? (
+                    <div className="tags">
+                        {props.tags.map((tag,i) =>
+                            <Tag name={tag.name} color={tag.color} key={i} /> 
+                        )}
+                    </div>
+                ): null }
             
             </div>
         </div>

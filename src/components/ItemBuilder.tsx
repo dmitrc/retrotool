@@ -1,9 +1,10 @@
 import { createElement, useRef } from "react";
 import { ItemProps } from "../types/types";
 import "./../styles/ItemBuilder.css";
+import { emit } from "../socket";
 
 export interface ItemBuilderProps {
-    handleAdd?: (item: ItemProps) => void
+    
 }
 
 export const ItemBuilder = (props: ItemBuilderProps) => {
@@ -21,13 +22,14 @@ export const ItemBuilder = (props: ItemBuilderProps) => {
     }
 
     const handleSubmit = () => {
-        props.handleAdd && props.handleAdd({
+        var obj = {
             id: getId(),
             title: titleRef.current && titleRef.current.value,
             date: formatDate(),
             owner: ownerRef.current && ownerRef.current.value,
             tags: tagsRef.current && tagsRef.current.value.split(",")
-        });
+        };
+        emit("echo", obj);
     }
 
     return (

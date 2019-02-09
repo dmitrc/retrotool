@@ -9,10 +9,10 @@
 }
 
 .item .c1 {
-    width: 144px;
     display: flex;
     flex-flow: column;
     justify-content: space-between;
+    align-items: center;
 }
 
 .item .c2 {
