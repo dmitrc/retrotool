@@ -3,7 +3,6 @@ import { ItemProps, ItemListProps } from '../types/types';
 import { Item } from './Item';
 import { Loading } from './Loading';
 import { Error } from './Error';
-import { useFetch } from './../hooks/useFetch';
 import { useSocket } from './../hooks/useSocket';
 import { emit } from '../socket';
 
@@ -31,14 +30,14 @@ export const ItemList = (props: ItemListProps) => {
       items = items.filter(props.filter);
     }
 
-    items = items.sort((a, b) => {
-      return a.id < b.id ? -1 : (a.id > b.id ? 1 : 0);
-    });
+    if (props.sort) {
+      items = items.sort(props.sort);
+    }
 
     return (
       <div>
         {items.map(item => 
-          <Item {...item} key={item.id} />
+          <Item {...item} key={item._id} />
         )}
       </div>
     )

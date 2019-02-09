@@ -1,12 +1,12 @@
 import { Component, CSSProperties } from "react";
 
 export interface ItemProps {
-  id: number,
+  _id: string,
   title: string,
   date: string,
   rating?: number,
   owner?: string,
-  tags?: TagProps[],
+  tags?: string[],
   actionItem?: string,
   notes?: string[],
   complete?: boolean
@@ -46,15 +46,15 @@ export interface PersonProps {
   fallback?: string
 }
 
-export interface TagProps {
-  name: string,
-  color?: string
-}
-
 export interface ErrorProps {
   text: string
 }
 
 export interface ItemListProps {
-  filter?: (i: ItemProps) => boolean
+  filter?: (i: ItemProps) => boolean,
+  sort?: (a: ItemProps, b: ItemProps) => number
+}
+
+export interface TagProps {
+  name: string
 }

@@ -4,7 +4,7 @@ import "./../styles/Tag.css";
 
 export const Tag = (props: TagProps) => {
     return (
-        <div className="tag" style={props.color ? {background: props.color} : {}}>
+        <div className="tag">
             {props.name}
         </div>
     )

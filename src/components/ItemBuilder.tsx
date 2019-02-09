@@ -3,18 +3,11 @@ import { ItemProps } from "../types/types";
 import "./../styles/ItemBuilder.css";
 import { emit } from "../socket";
 
-export interface ItemBuilderProps {
-    
-}
-
-export const ItemBuilder = (props: ItemBuilderProps) => {
+export const ItemBuilder = () => {
     const titleRef = useRef(null);
     const ownerRef = useRef(null);
+    const actionRef = useRef(null);
     const tagsRef = useRef(null);
-
-    const getId = () => {
-        return Math.floor(Math.random() * 100);
-    }
 
     const formatDate = () => {
         const d = new Date();
@@ -22,20 +15,36 @@ export const ItemBuilder = (props: ItemBuilderProps) => {
     }
 
     const handleSubmit = () => {
+        if (!titleRef.current || !titleRef.current.value) {
+            return;
+        }
+
+        const title = titleRef.current && titleRef.current.value || ""; 
+        const owner = ownerRef.current && ownerRef.current.value || "";
+        const actionItem = actionRef.current && actionRef.current.value || "";
+        const tags = tagsRef.current && tagsRef.current.value.split(",").map(x => x.trim()) || [];
+
         var obj = {
-            id: getId(),
-            title: titleRef.current && titleRef.current.value,
             date: formatDate(),
-            owner: ownerRef.current && ownerRef.current.value,
-            tags: tagsRef.current && tagsRef.current.value.split(",")
+            actionItem,
+            title,
+            owner,
+            tags
         };
-        emit("echo", obj);
+
+        emit("addItem", obj);
+
+        titleRef.current && (titleRef.current.value = "");
+        ownerRef.current && (ownerRef.current.value = "");
+        actionRef.current && (actionRef.current.value = "");
+        tagsRef.current && (tagsRef.current.value = "");
     }
 
     return (
         <div className="itembuilder">
             <input type="text" placeholder="Title" ref={titleRef} />
             <input type="text" placeholder="Owner (optional)" ref={ownerRef} />
+            <input type="text" placeholder="Action item (optional)" ref={actionRef} />
             <input type="text" placeholder="Tags (optional)" ref={tagsRef} />
 
             <button onClick={handleSubmit}>Submit</button>

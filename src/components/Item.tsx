@@ -1,17 +1,29 @@
 import { createElement } from "react";
-import { ItemProps } from "../types/types";
+import { ItemProps, RatingStatus } from "../types/types";
 import { Person } from "./Person";
 import { Rating } from "./Rating";
 import { Tag } from "./Tag";
 import "./../styles/Item.css";
+import { emit } from "../socket";
 
 export const Item = (props: ItemProps) => {
+    const handleChange = (status: RatingStatus, prevStatus: RatingStatus) => {
+        let delta = 0;
+
+        if (prevStatus == RatingStatus.Like) delta -= 1;
+        if (prevStatus == RatingStatus.Dislike) delta += 1;
+        if (status == RatingStatus.Like) delta += 1;
+        if (status == RatingStatus.Dislike) delta -= 1;
+
+        emit("rateItem", props._id, delta);
+    }
+
     return (
         <div className={"item " + (props.actionItem && "action") + (props.complete && "complete")}>
             <div className="c1">
                 <div className="date">{props.date}</div>
                 <Person alias={props.owner} />
-                <Rating value={props.rating || 0} />
+                <Rating value={props.rating || 0} onChange={handleChange} />
             </div>
             
             <div className="c2">  
@@ -35,7 +47,7 @@ export const Item = (props: ItemProps) => {
                 { props.tags && props.tags.length > 0 ? (
                     <div className="tags">
                         {props.tags.map((tag,i) =>
-                            <Tag name={tag.name} color={tag.color} key={i} /> 
+                            <Tag name={tag} key={i} /> 
                         )}
                     </div>
                 ): null }

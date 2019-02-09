@@ -8,11 +8,8 @@ import * as MdThumbsDown from "react-ionicons/lib/MdThumbsDown";
 
 export const Rating = (props: RatingProps) => {
     const [rating, setRating] = useState(RatingStatus.NotSet);
-    const value = props.value || 0;
-
     const activeUp = rating == RatingStatus.Like;
     const activeDown = rating == RatingStatus.Dislike;
-    const valueDiff = activeUp ? 1 : (activeDown ? -1 : 0);
 
     const handleUp = () => {
         setRating(prevVal => {
@@ -35,7 +32,7 @@ export const Rating = (props: RatingProps) => {
     return (
         <div className="rating">
             <IconButton icon={MdThumbsDown} className={activeDown && "danger"} onClick={handleDown} />
-            <span>{value + valueDiff}</span>
+            <span>{props.value || 0}</span>
             <IconButton icon={MdThumbsUp} className={activeUp && "success"} onClick={handleUp}  />
         </div>
     )

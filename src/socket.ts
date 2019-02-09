@@ -10,18 +10,18 @@ export const createSocket = () => {
 
 }
 
-export const emit = <T>(event: string, data?: T) => {
-    socket && socket.emit(event, data);
+export const emit = (event: string, ...args: any) => {
+    socket && socket.emit(event, ...args);
 }
 
-export const on = <T>(event: string, fn: (data?: T) => void) => {
+export const on = <T>(event: string, fn: (...args) => void) => {
     socket && socket.on(event, fn);
 }
 
-export const once = <T>(event: string, fn: (data?: T) => void) => {
+export const once = <T>(event: string, fn: (...args) => void) => {
     socket && socket.once(event, fn);
 }
 
-export const off = (event: string, fn: (data?: any) => void) => {
+export const off = (event: string, fn: (...args) => void) => {
     socket && socket.off(event, fn);
 }
