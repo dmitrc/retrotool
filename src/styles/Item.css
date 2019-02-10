@@ -11,14 +11,15 @@
 .item .c1 {
     display: flex;
     flex-flow: column;
-    justify-content: space-between;
-    align-items: center;
+    flex-basis: 140px;
 }
 
 .item .c3 {
     display: flex;
+    flex-basis: 180px;
     flex-flow: column;
     justify-content: space-between;
+    align-items: flex-end;
 }
 
 .item .c2 {
@@ -41,12 +42,20 @@
 }
 
 .item .person {
-    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+.item .person.edit {
+    margin: 0;
 }
 
 .item .action,
 .item .notes {
     margin-top: 10px;
+}
+
+.item .action > span {
+    display: inline;
 }
 
 .item .actionDesc {

@@ -1,4 +1,4 @@
-import { Component, CSSProperties } from "react";
+import { Component, CSSProperties, Ref } from "react";
 
 export interface ItemProps {
   _id?: string,
@@ -40,12 +40,13 @@ export const enum RatingStatus {
 
 export interface RatingProps {
   value?: number,
-  onChange?: (status: RatingStatus, prevStatus?: RatingStatus) => void
+  onUpdate?: (status: RatingStatus, prevStatus?: RatingStatus) => void
 }
 
 export interface PersonProps {
   alias?: string,
-  fallback?: string
+  edit?: boolean,
+  onUpdate?: (v: string) => void
 }
 
 export interface ErrorProps {
@@ -54,9 +55,34 @@ export interface ErrorProps {
 
 export interface ItemListProps {
   filter?: (i: ItemProps) => boolean,
-  sort?: (a: ItemProps, b: ItemProps) => number
+  sort?: (a: ItemProps, b: ItemProps) => number,
+  title?: string,
+  showIfEmpty?: boolean,
+  silentLoad?: boolean
+}
+
+export interface EditLabelProps {
+  value?: string,
+  placeholder?: string,
+  edit?: boolean,
+  className?: string,
+  customView?: typeof Component,
+  onUpdate?: (v: string) => void,
+  onBlur?: () => void,
+  inputRef?: Ref<any>
+}
+
+export interface EditListProps {
+  title?: string,
+  values?: string[],
+  edit?: boolean,
+  className?: string,
+  itemClassName?: string,
+  itemCustomView?: typeof Component,
+  itemPlaceholder?: string,
+  onUpdate?: (v: string[]) => void
 }
 
 export interface TagProps {
-  name: string
+  value?: string
 }

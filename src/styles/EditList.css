@@ -1,0 +1,23 @@
+.edititem span {
+  display: block;
+  margin-bottom: 4px;
+  position: relative;
+  margin-left: 16px;
+}
+
+.edititem span:before {
+  content: " ";
+  width: 4px;
+  height: 4px;
+  border-radius: 2px;
+  background: #000;
+  position: absolute;
+  top: calc(50% - 2px);
+  left: -16px;
+}
+
+.editlist .title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}

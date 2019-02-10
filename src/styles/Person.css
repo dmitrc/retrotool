@@ -3,17 +3,17 @@
 }
 
 .person img {
-    width: 80px;
+    width: 100px;
 }
 
 .person span {
-    width: 80px;
+    width: 100px;
     position: absolute;
     bottom: 0;
     left: 0;
     padding: 2px 2px 5px 2px;
     background: rgba(255,255,255,.75);
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     text-align: center;
     text-transform: uppercase;

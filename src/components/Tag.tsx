@@ -14,9 +14,9 @@ const tagColors = {
 }
 
 export const Tag = (props: TagProps) => {
-    if (props.name) {
+    if (props.value) {
         const tagId = props
-            .name
+            .value
             .trim()
             .replace(" ", "-")
             .toLowerCase();
@@ -31,7 +31,7 @@ export const Tag = (props: TagProps) => {
         }
         return (
             <div className="tag" style={style}>
-                {props.name.trim()}
+                {props.value.trim()}
             </div>
         )
     }

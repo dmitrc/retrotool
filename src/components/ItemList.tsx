@@ -5,6 +5,7 @@ import { Loading } from './Loading';
 import { Error } from './Error';
 import { useSocket } from './../hooks/useSocket';
 import { emit } from '../socket';
+import "./../styles/ItemList.css";
 
 export const ItemList = (props: ItemListProps) => {
   const itemsRes = useSocket("items");
@@ -14,9 +15,7 @@ export const ItemList = (props: ItemListProps) => {
   }, []);
 
   if (!itemsRes) {
-    return (
-      <Loading />
-    )
+    return !props.silentLoad ? <Loading /> : null;
   }
   if (itemsRes.error) {
     return (
@@ -34,13 +33,17 @@ export const ItemList = (props: ItemListProps) => {
       items = items.sort(props.sort);
     }
 
-    return (
-      <div>
-        {items.map(item => 
-          <Item {...item} key={item._id} />
-        )}
-      </div>
-    )
+    if (items.length > 0 || props.showIfEmpty) {
+      return (
+        <div className="itemlist">
+          { props.title ? <span className="title">{props.title}</span> : null}
+          {items.map(item => 
+            <Item {...item} key={item._id} />
+          )}
+        </div>
+      )
+    }
   }
+
   return null;
 }

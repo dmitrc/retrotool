@@ -15,7 +15,7 @@ export const Rating = (props: RatingProps) => {
         setRating(prevVal => {
             const newVal = (prevVal == RatingStatus.Like) ? RatingStatus.NotSet : RatingStatus.Like;
 
-            props.onChange && props.onChange(newVal, prevVal);
+            props.onUpdate && props.onUpdate(newVal, prevVal);
             return newVal;
         });
     }
@@ -24,7 +24,7 @@ export const Rating = (props: RatingProps) => {
         setRating(prevVal => {
             const newVal = (prevVal == RatingStatus.Dislike) ? RatingStatus.NotSet : RatingStatus.Dislike;
 
-            props.onChange && props.onChange(newVal, prevVal);
+            props.onUpdate && props.onUpdate(newVal, prevVal);
             return newVal;
         });
     }
