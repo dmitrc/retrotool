@@ -1,15 +1,17 @@
 import { Component, CSSProperties } from "react";
 
 export interface ItemProps {
-  _id: string,
-  title: string,
-  date: string,
+  _id?: string,
+  title?: string,
+  date?: string,
   rating?: number,
   owner?: string,
   tags?: string[],
   actionItem?: string,
   notes?: string[],
-  complete?: boolean
+  complete?: boolean,
+  pinned?: boolean,
+  new?: boolean
 }
 
 export interface IconProps {

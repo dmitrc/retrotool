@@ -1,11 +1,40 @@
 import { createElement } from "react";
 import { TagProps } from "../types/types";
 import "./../styles/Tag.css";
+import { Color } from "./../utils/Color";
+
+const tagColors = {
+    "overdue": new Color(200, 100, 0),
+    "discussion": new Color(0, 0, 140),
+    "triage": new Color(0, 140, 0),
+    "action-item": new Color(200, 0, 0),
+    "completed": new Color(0, 200, 0),
+    "vote": new Color(100, 0, 150),
+    "wow": new Color(255, 0 , 200)
+}
 
 export const Tag = (props: TagProps) => {
-    return (
-        <div className="tag">
-            {props.name}
-        </div>
-    )
+    if (props.name) {
+        const tagId = props
+            .name
+            .trim()
+            .replace(" ", "-")
+            .toLowerCase();
+
+        let style = null;
+        const tagColor = tagColors[tagId];
+        if (tagColor) {
+            style = {
+                background: tagColor.toCss(),
+                color: tagColor.toTextCss()
+            }
+        }
+        return (
+            <div className="tag" style={style}>
+                {props.name.trim()}
+            </div>
+        )
+    }
+
+    return null;
 }
