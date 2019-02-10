@@ -1,17 +1,18 @@
-import { createElement, ChangeEvent } from "react";
+import { createElement, ChangeEvent, FocusEvent } from "react";
 import { EditLabelProps } from "../types/types";
 
 export const EditLabel = (props: EditLabelProps) => {
-  const handleChange = (e: ChangeEvent) => {
-    let v = e.target && (e.target as HTMLInputElement).value;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    let v = e.target && e.target.value;
     if (v != null) {
       v = v.trim();
       props.onUpdate && props.onUpdate(v);
     }
   }
 
-  const handleBlur = () => {
-    props.onBlur && props.onBlur();
+  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+    let v = e.target && e.target.value;
+    props.onBlur && props.onBlur(v || null);
   }
 
   if (props.edit) {

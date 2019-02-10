@@ -19,7 +19,6 @@ export const EditList = (props: EditListProps) => {
   const [updateValues, setUpdateValues] = useState(props.values || []);
   const addRef = useRef(null);
 
-  let addValue = "";
   let uv = updateValues.slice();
 
   if (props.values || props.edit) {
@@ -41,19 +40,15 @@ export const EditList = (props: EditListProps) => {
       uv = [];
     }
 
-    const handleAddUpdate = (v: string) => {
-      addValue = v;
-    }
-
-    const handleAddBlur = () => {
-      if (addValue && addValue.trim()) {
+    const handleAddBlur = (v: string) => {
+      if (v && v.trim()) {
         const u = updateValues.slice();
-        u.push(addValue.trim());
+        u.push(v.trim());
         setUpdateValues(u);
         handleFlush(u);
         
         addRef.current && (addRef.current.value = "");
-        addValue = "";
+        v = "";
       }
     }
 
@@ -64,6 +59,7 @@ export const EditList = (props: EditListProps) => {
 
     const values = props.edit ? updateValues : props.values;
     // TODO: Has hash collisions when adjacent items are the same
+    // TODO: Update values persist in edit mode but should not
     return (
       <div className={"editlist " + (props.className || "")}>
         { props.title && props.values && props.values.length > 0 && !props.edit ? <span className="title">{props.title}:</span> : null }
@@ -76,7 +72,7 @@ export const EditList = (props: EditListProps) => {
           }) : null
         }
 
-        { props.edit ? <EditLabel value="" edit={props.edit} className={"edititem " + (props.itemClassName || "")} customView={props.itemCustomView} placeholder={props.itemPlaceholder} onUpdate={handleAddUpdate} onBlur={handleAddBlur} inputRef={addRef} /> : null }
+        { props.edit ? <EditLabel value="" edit={props.edit} className={"edititem " + (props.itemClassName || "")} customView={props.itemCustomView} placeholder={props.itemPlaceholder} onBlur={handleAddBlur} inputRef={addRef} /> : null }
       </div>
     )
   }

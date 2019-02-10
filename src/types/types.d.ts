@@ -72,7 +72,7 @@ export interface EditLabelProps {
   className?: string,
   customView?: typeof Component,
   onUpdate?: (v: string) => void,
-  onBlur?: () => void,
+  onBlur?: (v: string) => void,
   inputRef?: Ref<any>
 }
 
