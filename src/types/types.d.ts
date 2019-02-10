@@ -53,12 +53,16 @@ export interface ErrorProps {
   text: string
 }
 
+export interface SplitSettings {
+  id: string,
+  title: string,
+  filter: (i: ItemProps) => boolean
+}
+
 export interface ItemListProps {
   filter?: (i: ItemProps) => boolean,
   sort?: (a: ItemProps, b: ItemProps) => number,
-  title?: string,
-  showIfEmpty?: boolean,
-  silentLoad?: boolean
+  split?: SplitSettings[]
 }
 
 export interface EditLabelProps {

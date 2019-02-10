@@ -3,25 +3,42 @@ import { EditListProps } from "../types/types";
 import { EditLabel } from "../components/EditLabel";
 import "./../styles/EditList.css";
 
+const hash = (s: string) => {
+  var hash = 0, i, chr;
+  if (s == null) return null;
+  if (s.length === 0) return hash;
+  for (i = 0; i < s.length; i++) {
+    chr   = s.charCodeAt(i);
+    hash  = ((hash << 5) - hash) + chr;
+    hash |= 0;
+  }
+  return hash;
+}
+
 export const EditList = (props: EditListProps) => {
   const [updateValues, setUpdateValues] = useState(props.values || []);
   const addRef = useRef(null);
+
   let addValue = "";
+  let uv = updateValues.slice();
 
   if (props.values || props.edit) {
 
     const handleUpdate = (i: number) => {
       return (v: string) => {
-        const u = updateValues.slice();
         if (v && v.trim()) {
-            u[i] = v;
+            uv[i] = v;
         }
         else {
-          u.splice(i, 1);
+          uv.splice(i, 1);
         }
-        setUpdateValues(u);
-        handleFlush(u);
       };
+    }
+
+    const handleBlur = () => {
+      setUpdateValues(uv);
+      handleFlush(uv);
+      uv = [];
     }
 
     const handleAddUpdate = (v: string) => {
@@ -46,13 +63,14 @@ export const EditList = (props: EditListProps) => {
     }
 
     const values = props.edit ? updateValues : props.values;
+    // TODO: Has hash collisions when adjacent items are the same
     return (
       <div className={"editlist " + (props.className || "")}>
-        { props.title && !props.edit ? <span className="title">{props.title}:</span> : null }
+        { props.title && props.values && props.values.length > 0 && !props.edit ? <span className="title">{props.title}:</span> : null }
         { values ? values.map((v,i) => {
             return (
-              <div className="edititem" key={i}>
-                <EditLabel value={v} edit={props.edit} className={props.itemClassName} customView={props.itemCustomView} placeholder={props.itemPlaceholder} onUpdate={handleUpdate(i)} />
+              <div className="edititem" key={hash(i+v)}>
+                <EditLabel value={v} edit={props.edit} className={props.itemClassName} customView={props.itemCustomView} placeholder={props.itemPlaceholder} onUpdate={handleUpdate(i)} onBlur={handleBlur} />
               </div>
             );
           }) : null

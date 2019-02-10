@@ -9,13 +9,12 @@ import "./../styles/ItemList.css";
 
 export const ItemList = (props: ItemListProps) => {
   const itemsRes = useSocket("items");
-
   useEffect(() => {
     emit("getItems");
   }, []);
 
   if (!itemsRes) {
-    return !props.silentLoad ? <Loading /> : null;
+    return <Loading />;
   }
   if (itemsRes.error) {
     return (
@@ -24,6 +23,7 @@ export const ItemList = (props: ItemListProps) => {
   }
   if (itemsRes.data) {
     let items = itemsRes.data as ItemProps[];
+    let itemsGroups = [];
 
     if (props.filter) {
       items = items.filter(props.filter);
@@ -33,12 +33,28 @@ export const ItemList = (props: ItemListProps) => {
       items = items.sort(props.sort);
     }
 
-    if (items.length > 0 || props.showIfEmpty) {
+    if (props.split) {
+      props.split.forEach(c => {
+        const gi = items.filter(c.filter);
+        if (gi && gi.length > 0) {
+          itemsGroups.push({ id: c.id, title: c.title, items: gi});
+        }
+      });
+    }
+    else {
+      itemsGroups.push({ id: "main", title: null, items: items });
+    }
+
+    if (items.length > 0) {
       return (
-        <div className="itemlist">
-          { props.title ? <span className="title">{props.title}</span> : null}
-          {items.map(item => 
-            <Item {...item} key={item._id} />
+        <div className="itemroot">
+          { itemsGroups.map(g => 
+            <div className="itemlist" key={g.id}>
+              { g.title ? <span className="title">{g.title}</span> : null}
+              { g.items.map(item => 
+                <Item {...item} key={item._id} />
+              )}
+            </div>
           )}
         </div>
       )

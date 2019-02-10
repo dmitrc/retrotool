@@ -24,8 +24,8 @@ input {
 }
 
 #app {
-    width: 80%;
+    width: calc(100% - 64px);
     min-width: 320px;
-    max-width: 1600px;
+    max-width: 950px;
     margin: 0 auto;
 }
