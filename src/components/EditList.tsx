@@ -1,6 +1,6 @@
 import { createElement, useState, useRef, useEffect } from "react";
 import { EditListProps } from "../types/types";
-import { EditLabel } from "../components/EditLabel";
+import { EditLabel } from "./EditLabel";
 import "./../styles/EditList.css";
 
 const hash = (s: string) => {

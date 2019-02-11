@@ -13,7 +13,7 @@ import * as MdStar from "react-ionicons/lib/MdStar";
 import * as MdClose from "react-ionicons/lib/MdClose";
 import * as MdCheckmarkCircleOutline from "react-ionicons/lib/MdCheckmarkCircleOutline";
 import { EditLabel } from "./EditLabel";
-import { EditList } from "../styles/EditList";
+import { EditList } from "./EditList";
 import { UserContext } from "../contexts/UserContext";
 
 export const Item = (props: ItemProps) => {
