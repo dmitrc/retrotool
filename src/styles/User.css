@@ -1,0 +1,7 @@
+.user span {
+    display: inline;
+}
+
+.user .alias {
+    font-weight: 600;
+}

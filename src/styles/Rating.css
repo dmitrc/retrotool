@@ -1,9 +1,19 @@
 .rating > span {
     margin: 0 4px;
     font-size: 20px;
+    min-width: 20px;
+    text-align: center;
 }
 
 .rating > * {
     display: inline-block;
     vertical-align: middle;
+}
+
+.iconb.dislike svg {
+    fill: #900;
+}
+
+.iconb.like svg {
+    fill: #090;
 }

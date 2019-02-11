@@ -17,7 +17,7 @@ export const EditLabel = (props: EditLabelProps) => {
 
   if (props.edit) {
     return (
-      <input type="text" defaultValue={props.value} className={props.className} placeholder={props.placeholder} style={{width: "100%"}} onChange={handleChange} onBlur={handleBlur} ref={props.inputRef} />
+      <input type="text" defaultValue={props.value} className={props.className} placeholder={props.placeholder} onChange={handleChange} onBlur={handleBlur} ref={props.inputRef} />
     )
   }
   else if (props.value && props.customView) {

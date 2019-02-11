@@ -4,6 +4,7 @@ export let socket: SocketIOClient.Socket = null;
 
 export const createSocket = () => {
     socket = io("http://localhost:3001");
+    (window as any).io = socket;
 }
 
 export const emit = (event: string, ...args: any) => {

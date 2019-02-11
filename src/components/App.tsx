@@ -3,12 +3,11 @@ import { ItemList } from './ItemList';
 import { Item } from './Item';
 import "./../styles/App.css";
 import { ItemProps } from '../types/types';
+import { User } from './User';
+import { UserContext } from '../contexts/UserContext';
+import { useLocalStorage } from '../hooks/useLocalStorage';
 
 export const App = () => {
-    const itemFilter = (i: ItemProps) => {
-        return true;
-    }
-
     const itemSort = (a: ItemProps, b: ItemProps) => {
         // Top priority - pinned
         if (a.pinned && !b.pinned) {
@@ -109,12 +108,14 @@ export const App = () => {
                 return !i.pinned && i.complete;
             }
         }
-    ]
+    ];
 
+    const [user, setUser] = useLocalStorage<string>("user", null);
     return (
-        <div>
+        <UserContext.Provider value={[user,setUser]}>
+            <User />
             <Item new={true} tags={["triage"]} date={getDate()} />
-            <ItemList filter={itemFilter} sort={itemSort} split={itemSplit} />
-        </div>
+            <ItemList sort={itemSort} split={itemSplit} />
+        </UserContext.Provider>
     );
 };

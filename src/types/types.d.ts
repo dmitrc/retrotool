@@ -4,7 +4,8 @@ export interface ItemProps {
   _id?: string,
   title?: string,
   date?: string,
-  rating?: number,
+  likes?: string[],
+  dislikes?: string[]
   owner?: string,
   tags?: string[],
   actionItem?: string,
@@ -32,15 +33,11 @@ export interface IconButtonProps {
   onClick?: () => void
 }
 
-export const enum RatingStatus {
-  NotSet,
-  Dislike,
-  Like 
-}
-
 export interface RatingProps {
-  value?: number,
-  onUpdate?: (status: RatingStatus, prevStatus?: RatingStatus) => void
+  likes?: string[],
+  dislikes?: string[],
+  onLike?: () => void,
+  onDislike?: () => void
 }
 
 export interface PersonProps {

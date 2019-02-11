@@ -1,39 +1,37 @@
-import { createElement, useState } from "react";
-import { RatingProps, RatingStatus } from "../types/types";
+import { createElement, useContext } from "react";
+import { RatingProps } from "../types/types";
 import { IconButton } from "./IconButton";
 import "./../styles/Rating.css";
 
 import * as MdThumbsUp from "react-ionicons/lib/MdThumbsUp";
 import * as MdThumbsDown from "react-ionicons/lib/MdThumbsDown";
+import { UserContext } from "../contexts/UserContext";
 
 export const Rating = (props: RatingProps) => {
-    const [rating, setRating] = useState(RatingStatus.NotSet);
-    const activeUp = rating == RatingStatus.Like;
-    const activeDown = rating == RatingStatus.Dislike;
+    const [user, setUser] = useContext(UserContext);
 
-    const handleUp = () => {
-        setRating(prevVal => {
-            const newVal = (prevVal == RatingStatus.Like) ? RatingStatus.NotSet : RatingStatus.Like;
+    const getRating = () => {
+        const likes = props.likes || [];
+        const dislikes = props.dislikes || [];
 
-            props.onUpdate && props.onUpdate(newVal, prevVal);
-            return newVal;
-        });
+        return likes.length - dislikes.length;
     }
 
-    const handleDown = () => {
-        setRating(prevVal => {
-            const newVal = (prevVal == RatingStatus.Dislike) ? RatingStatus.NotSet : RatingStatus.Dislike;
+    const didLike = () => {
+        const likes = props.likes || [];
+        return likes.indexOf(user) > -1;
+    }
 
-            props.onUpdate && props.onUpdate(newVal, prevVal);
-            return newVal;
-        });
+    const didDislike = () => {
+        const dislikes = props.dislikes || [];
+        return dislikes.indexOf(user) > -1;
     }
 
     return (
         <div className="rating">
-            <IconButton icon={MdThumbsDown} className={activeDown && "danger"} onClick={handleDown} />
-            <span>{props.value || 0}</span>
-            <IconButton icon={MdThumbsUp} className={activeUp && "success"} onClick={handleUp}  />
+            <IconButton icon={MdThumbsDown} className={didDislike() ? "dislike" : null} onClick={props.onDislike} />
+            <span>{getRating()}</span>
+            <IconButton icon={MdThumbsUp} className={didLike() ? "like" : null} onClick={props.onLike}  />
         </div>
     )
 }

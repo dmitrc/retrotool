@@ -1,5 +1,5 @@
-import { createElement, useState, useEffect } from "react";
-import { ItemProps, RatingStatus } from "../types/types";
+import { createElement, useState, useContext } from "react";
+import { ItemProps } from "../types/types";
 import { Person } from "./Person";
 import { Rating } from "./Rating";
 import { Tag } from "./Tag";
@@ -14,27 +14,38 @@ import * as MdClose from "react-ionicons/lib/MdClose";
 import * as MdCheckmarkCircleOutline from "react-ionicons/lib/MdCheckmarkCircleOutline";
 import { EditLabel } from "./EditLabel";
 import { EditList } from "../styles/EditList";
+import { UserContext } from "../contexts/UserContext";
 
 export const Item = (props: ItemProps) => {
     const [ edit, setEdit ] = useState(props.new ? true : false);
+    const [ user, setUser ] = useContext(UserContext);
+
     let updateItem: ItemProps = props.new ? {...props} : {};
 
-    const handleRatingUpdate = (status: RatingStatus, prevStatus: RatingStatus) => {
-        let delta = 0;
-
-        if (prevStatus == RatingStatus.Like) delta -= 1;
-        if (prevStatus == RatingStatus.Dislike) delta += 1;
-        if (status == RatingStatus.Like) delta += 1;
-        if (status == RatingStatus.Dislike) delta -= 1;
-
-        emit("rateItem", props._id, delta);
-    }
     const handlePin = () => {
         if (props.pinned) {
             emit("unpinItem", props._id);
         }
         else {
             emit("pinItem", props._id);
+        }
+    }
+
+    const handleLike = () => {
+        if (user) {
+            emit("likeItem", props._id, user);
+        }
+        else {
+            alert("Please input your alias on the top of the page to like items");
+        }
+    }
+
+    const handleDislike = () => {
+        if (user) {
+            emit("dislikeItem", props._id, user);
+        }
+        else {
+            alert("Please input your alias on the top of the page to dislike items");
         }
     }
 
@@ -59,10 +70,6 @@ export const Item = (props: ItemProps) => {
         }
         if (updateItem.date === ""|| (props.new && !updateItem.date)) {
             alert("Date is a required field");
-            return;
-        }
-        if (isNaN(new Date(updateItem.date).getTime())) {
-            alert("Date field has the wrong format (use MMM yyyy, eg Jan 2019)");
             return;
         }
 
@@ -120,7 +127,7 @@ export const Item = (props: ItemProps) => {
             <div className="c1">
                 <EditLabel edit={edit} placeholder="Date" value={props.date} className="date" onUpdate={handleDateUpdate} />
                 <Person edit={edit} alias={props.owner} onUpdate={handleOwnerUpdate} />
-                {!edit ? <Rating value={props.rating || 0} onUpdate={handleRatingUpdate} /> : null}
+                {!edit ? <Rating onLike={handleLike} onDislike={handleDislike} likes={props.likes} dislikes={props.dislikes} /> : null}
                 <div className="buttons">
                     { edit && !props.new ? <IconButton icon={MdTrash} onClick={handleDelete} /> : null }
                 </div>
@@ -142,8 +149,8 @@ export const Item = (props: ItemProps) => {
                 <EditList values={props.tags} edit={edit} className="tags" itemClassName="tag" itemCustomView={Tag as any} itemPlaceholder="New tag"  onUpdate={handleTagsUpdate} />
 
                 <div className="buttons">
-                    {!edit ? <IconButton icon={MdStar} onClick={handlePin} className={props.pinned ? "warning" : null} /> : null }
-                    {!edit ? <IconButton icon={MdCheckmarkCircleOutline} onClick={handleComplete} className={props.complete ? "success" : null} /> : null}
+                    {!edit ? <IconButton icon={MdStar} onClick={handlePin} className="pin" /> : null }
+                    {!edit ? <IconButton icon={MdCheckmarkCircleOutline} onClick={handleComplete} className="complete" /> : null}
                     {!edit ? <IconButton icon={MdCreate} onClick={handleEdit} /> : null}
 
                     {edit ? <IconButton icon={MdCheckmark} onClick={handleSave} /> : null }

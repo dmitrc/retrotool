@@ -8,6 +8,10 @@
     flex-flow: row;
 }
 
+.item input {
+    width: 100%;
+}
+
 .item .c1 {
     display: flex;
     flex-flow: column;
@@ -70,4 +74,17 @@
 
 .item.pinned {
     background: rgb(255,255,240);
+}
+
+.item.pinned .iconb.pin {
+    background: #ffd700;
+}
+
+.item.complete .iconb.complete {
+    background: #090;
+    color: #fff;
+}
+
+.item.complete .iconb.complete svg {
+    fill: #fff;
 }
