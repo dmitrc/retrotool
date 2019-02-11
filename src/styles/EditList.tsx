@@ -1,4 +1,4 @@
-import { createElement, useState, useRef } from "react";
+import { createElement, useState, useRef, useEffect } from "react";
 import { EditListProps } from "../types/types";
 import { EditLabel } from "../components/EditLabel";
 import "./../styles/EditList.css";
@@ -20,6 +20,12 @@ export const EditList = (props: EditListProps) => {
   const addRef = useRef(null);
 
   let uv = updateValues.slice();
+
+  useEffect(() => {
+    if (!props.edit) {
+      setUpdateValues(props.values || []);
+    }
+  }, [props.edit]);
 
   if (props.values || props.edit) {
 
@@ -48,12 +54,10 @@ export const EditList = (props: EditListProps) => {
         handleFlush(u);
         
         addRef.current && (addRef.current.value = "");
-        v = "";
       }
     }
 
     const handleFlush = (u: string[]) => {
-      console.log(u);
       props.onUpdate && props.onUpdate(u);
     }
 

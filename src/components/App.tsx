@@ -12,34 +12,34 @@ export const App = () => {
     const itemSort = (a: ItemProps, b: ItemProps) => {
         // Top priority - pinned
         if (a.pinned && !b.pinned) {
-            return 1;
+            return -1;
         }
         else if (!a.pinned && b.pinned) {
-            return -1;
+            return 1;
         }
         else {
             // Next priority - has action item
             if (a.actionItem && !b.actionItem) {
-                return 1;
+                return -1;
             }
             else if (!a.actionItem && b.actionItem) {
-                return -1;
+                return 1;
             }
             else {
                 // Next priority - not complete
                 if (a.complete && !b.complete) {
-                    return -1;
+                    return 1;
                 }
                 else if (!a.complete && b.complete) {
-                    return 1;
+                    return -1;
                 }
                 else {
                     // Next priority - date
-                    if (a.date > b.date) {
-                        return 1;
-                    }
-                    else if (a.date < b.date) {
+                    if (new Date(a.date) > new Date(b.date)) {
                         return -1;
+                    }
+                    else if (new Date(a.date) < new Date(b.date)) {
+                        return 1;
                     }
                     else {
                         // Equal for all of our needa
@@ -48,6 +48,43 @@ export const App = () => {
                 }
             }
         }
+    }
+
+    const getMonth = (d: Date) => {
+        const m = d.getMonth() + 1;
+        switch (m) {
+            case 1:
+                return "Jan";
+            case 2:
+                return "Feb";
+            case 3:
+                return "Mar";
+            case 4:
+                return "Apr";
+            case 5:
+                return "May";
+            case 6:
+                return "Jun";
+            case 7:
+                return "Jul";
+            case 8:
+                return "Aug";
+            case 9:
+                return "Sep";
+            case 10:
+                return "Oct";
+            case 11:
+                return "Nov";
+            case 12:
+                return "Dec";
+            default:
+                return null;
+        }
+    }
+
+    const getDate = () => {
+        const d = new Date();
+        return `${getMonth(d)} ${d.getFullYear()}`;
     }
 
     const itemSplit = [
@@ -76,7 +113,7 @@ export const App = () => {
 
     return (
         <div>
-            <Item new={true} />
+            <Item new={true} tags={["triage"]} date={getDate()} />
             <ItemList filter={itemFilter} sort={itemSort} split={itemSplit} />
         </div>
     );

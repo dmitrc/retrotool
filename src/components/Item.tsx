@@ -1,4 +1,4 @@
-import { createElement, useState } from "react";
+import { createElement, useState, useEffect } from "react";
 import { ItemProps, RatingStatus } from "../types/types";
 import { Person } from "./Person";
 import { Rating } from "./Rating";
@@ -16,9 +16,8 @@ import { EditLabel } from "./EditLabel";
 import { EditList } from "../styles/EditList";
 
 export const Item = (props: ItemProps) => {
-    const [ edit, setEdit ] = useState(false);
-    const editMode = edit || props.new;
-    let updateItem: ItemProps = {};
+    const [ edit, setEdit ] = useState(props.new ? true : false);
+    let updateItem: ItemProps = props.new ? {...props} : {};
 
     const handleRatingUpdate = (status: RatingStatus, prevStatus: RatingStatus) => {
         let delta = 0;
@@ -54,14 +53,30 @@ export const Item = (props: ItemProps) => {
     }
 
     const handleSave = () => {
-        if (edit) {
+        if (updateItem.title === "" || (props.new && !updateItem.title)) {
+            alert("Title is a required field");
+            return;
+        }
+        if (updateItem.date === ""|| (props.new && !updateItem.date)) {
+            alert("Date is a required field");
+            return;
+        }
+        if (isNaN(new Date(updateItem.date).getTime())) {
+            alert("Date field has the wrong format (use MMM yyyy, eg Jan 2019)");
+            return;
+        }
+
+        if (edit && !props.new) {
             emit("editItem", props._id, updateItem);
-            updateItem = {};
             setEdit(false);
         }
         else if (props.new) {
             emit("addItem", updateItem);
-            updateItem = {};
+
+            // Hacky but needed to reset the input fields for the new item
+            // TODO: Find a better way to do this
+            setEdit(false);
+            setTimeout(() => { setEdit(true) }, 0);
         }
     }
 
@@ -70,7 +85,10 @@ export const Item = (props: ItemProps) => {
     }
 
     const handleDelete = () => {
-        emit("deleteItem", props._id);
+        const c = confirm("Are you sure you want to delete this item?");
+        if (c) {
+            emit("deleteItem", props._id);
+        }
     }
 
     const handleTitleUpdate = (v: string) => {
@@ -98,37 +116,37 @@ export const Item = (props: ItemProps) => {
     }
 
     return (
-        <div className={"item " + (props.actionItem ? "action " : "") + (props.complete ? "complete " : "")}>
+        <div className={"item " + (props.actionItem ? "action " : "") + (props.complete ? "complete " : "") + (props.pinned ? "pinned " : "")}>
             <div className="c1">
-                <EditLabel edit={editMode} placeholder="Date" value={props.date} className="date" onUpdate={handleDateUpdate} />
-                {!editMode ? <Rating value={props.rating || 0} onUpdate={handleRatingUpdate} /> : null}
-                <Person edit={editMode} alias={props.owner} onUpdate={handleOwnerUpdate} />
+                <EditLabel edit={edit} placeholder="Date" value={props.date} className="date" onUpdate={handleDateUpdate} />
+                <Person edit={edit} alias={props.owner} onUpdate={handleOwnerUpdate} />
+                {!edit ? <Rating value={props.rating || 0} onUpdate={handleRatingUpdate} /> : null}
                 <div className="buttons">
                     { edit && !props.new ? <IconButton icon={MdTrash} onClick={handleDelete} /> : null }
                 </div>
             </div>
             
             <div className="c2">  
-                <EditLabel edit={editMode} placeholder="Title" value={props.title} className="title" onUpdate={handleTitleUpdate} />
+                <EditLabel edit={edit} placeholder="Title" value={props.title} className="title" onUpdate={handleTitleUpdate} />
                 <div className="action">
                     { props.actionItem && !edit ? (
                         <span className="actionDesc">Action item: </span>
                     ): null}
-                    <EditLabel edit={editMode} placeholder="Action item" value={props.actionItem} className="actionVal" onUpdate={handleActionUpdate} />
+                    <EditLabel edit={edit} placeholder="Action item" value={props.actionItem} className="actionVal" onUpdate={handleActionUpdate} />
                 </div>
 
-                <EditList values={props.notes} edit={editMode} className="notes" itemClassName="note" title="Notes" itemPlaceholder="New note" onUpdate={handleNotesUpdate} />
+                <EditList values={props.notes} edit={edit} className="notes" itemClassName="note" title="Notes" itemPlaceholder="New note" onUpdate={handleNotesUpdate} />
             </div>
             
             <div className="c3">
-                <EditList values={props.tags} edit={editMode} className="tags" itemClassName="tag" title="Tags" itemCustomView={Tag as any} itemPlaceholder="New tag"  onUpdate={handleTagsUpdate} />
+                <EditList values={props.tags} edit={edit} className="tags" itemClassName="tag" itemCustomView={Tag as any} itemPlaceholder="New tag"  onUpdate={handleTagsUpdate} />
 
                 <div className="buttons">
-                    {!editMode ? <IconButton icon={MdStar} onClick={handlePin} className={props.pinned ? "warning" : null} /> : null }
-                    {!editMode ? <IconButton icon={MdCheckmarkCircleOutline} onClick={handleComplete} className={props.complete ? "success" : null} /> : null}
-                    {!editMode ? <IconButton icon={MdCreate} onClick={handleEdit} /> : null}
+                    {!edit ? <IconButton icon={MdStar} onClick={handlePin} className={props.pinned ? "warning" : null} /> : null }
+                    {!edit ? <IconButton icon={MdCheckmarkCircleOutline} onClick={handleComplete} className={props.complete ? "success" : null} /> : null}
+                    {!edit ? <IconButton icon={MdCreate} onClick={handleEdit} /> : null}
 
-                    {editMode ? <IconButton icon={MdCheckmark} onClick={handleSave} /> : null }
+                    {edit ? <IconButton icon={MdCheckmark} onClick={handleSave} /> : null }
 
                     { edit && !props.new ? <IconButton icon={MdClose} onClick={handleCancel} /> : null }
                     
