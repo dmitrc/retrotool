@@ -76,6 +76,18 @@
     background: rgb(255,255,240);
 }
 
+.item.own {
+    box-shadow: 0 0 10px 2px rgba(255,0,0,.4);
+}
+
+.item.own.complete {
+    box-shadow: 0 0 10px 2px rgba(0,255,0,.4);
+}
+
+.item.own.pinned {
+    box-shadow: 0 0 10px 2px rgba(255,255,0,.4);
+}
+
 .item.pinned .iconb.pin {
     background: #ffd700;
 }

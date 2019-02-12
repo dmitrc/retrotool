@@ -85,8 +85,7 @@ export const Item = (props: ItemProps) => {
         else if (props.new) {
             emit("addItem", updateItem);
 
-            // Hacky but needed to reset the input fields for the new item
-            // TODO: Find a better way to do this
+            // Hacky but needed in order to reset the input fields for the new item
             setEdit(false);
             setTimeout(() => { setEdit(true) }, 0);
         }
@@ -127,8 +126,10 @@ export const Item = (props: ItemProps) => {
         updateItem.tags = v;
     }
 
+    const ownItem = user && user.alias && props.owner && user.alias == props.owner;
+
     return (
-        <div className={"item " + (props.actionItem ? "action " : "") + (props.complete ? "complete " : "") + (props.pinned ? "pinned " : "")}>
+        <div className={"item " + (props.actionItem ? "action " : "") + (props.complete ? "complete " : "") + (props.pinned ? "pinned " : "") + (ownItem ? "own " : null)}>
             <div className="c1">
                 <EditLabel edit={edit} placeholder="Date" value={props.date} className="date" onUpdate={handleDateUpdate} />
                 <Person edit={edit} alias={props.owner} onUpdate={handleOwnerUpdate} />

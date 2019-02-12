@@ -5,7 +5,6 @@ export function useSubscribe(event: string) {
     const [response, setResponse] = useState(null);
 
     const handler = (response) => {
-        console.log("subscription response...");
         setResponse(response);
     };
 

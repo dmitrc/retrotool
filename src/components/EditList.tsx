@@ -2,24 +2,13 @@ import { createElement, useState, useRef, useEffect } from "react";
 import { EditListProps } from "../types/types";
 import { EditLabel } from "./EditLabel";
 import "./../styles/EditList.css";
-
-const hash = (s: string) => {
-  var hash = 0, i, chr;
-  if (s == null) return null;
-  if (s.length === 0) return hash;
-  for (i = 0; i < s.length; i++) {
-    chr   = s.charCodeAt(i);
-    hash  = ((hash << 5) - hash) + chr;
-    hash |= 0;
-  }
-  return hash;
-}
+import { hash } from "../utils/Hash";
 
 export const EditList = (props: EditListProps) => {
   const [updateValues, setUpdateValues] = useState(props.values || []);
   const addRef = useRef(null);
 
-  let uv = updateValues.slice();
+  let uv = [...updateValues];
 
   useEffect(() => {
     if (!props.edit) {
@@ -48,7 +37,7 @@ export const EditList = (props: EditListProps) => {
 
     const handleAddBlur = (v: string) => {
       if (v && v.trim()) {
-        const u = updateValues.slice();
+        const u = [...updateValues];
         u.push(v.trim());
         setUpdateValues(u);
         handleFlush(u);
@@ -62,8 +51,7 @@ export const EditList = (props: EditListProps) => {
     }
 
     const values = props.edit ? updateValues : props.values;
-    // TODO: Has hash collisions when adjacent items are the same
-    // TODO: Update values persist in edit mode but should not
+    // WARN: Has hash collisions (and subseq input element reuse) when adjacent items are the same and top one is removed
     return (
       <div className={"editlist " + (props.className || "")}>
         { props.title && props.values && props.values.length > 0 && !props.edit ? <span className="title">{props.title}:</span> : null }

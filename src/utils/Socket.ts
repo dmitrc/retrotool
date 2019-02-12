@@ -4,7 +4,6 @@ let socket: SocketIOClient.Socket = null;
 let currentUrl: string = null;
 
 export const createSocket = (url: string = "http://localhost:3001") => {
-    console.log("creating socket...");
    if (socket && currentUrl == url) {
        return socket;
    }
@@ -18,7 +17,6 @@ export const createSocket = (url: string = "http://localhost:3001") => {
 }
 
 export const destroySocket = () => {
-    console.log("destroying socket...");
     socket && socket.disconnect();
     socket = null;
 }
