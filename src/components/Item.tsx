@@ -3,19 +3,19 @@ import { ItemProps } from "../types/types";
 import { Person } from "./Person";
 import { Rating } from "./Rating";
 import { Tag } from "./Tag";
-import "./../styles/Item.css";
 import { emit } from "../utils/Socket";
 import { IconButton } from "./IconButton";
+import { EditLabel } from "./EditLabel";
+import { EditList } from "./EditList";
+import { UserContext } from "../contexts/UserContext";
+import { isValidDate } from "../utils/Date";
 import * as MdCheckmark from "react-ionicons/lib/MdCheckmark";
 import * as MdTrash from "react-ionicons/lib/MdTrash";
 import * as MdCreate from "react-ionicons/lib/MdCreate";
 import * as MdStar from "react-ionicons/lib/MdStar";
 import * as MdClose from "react-ionicons/lib/MdClose";
 import * as MdCheckmarkCircleOutline from "react-ionicons/lib/MdCheckmarkCircleOutline";
-import { EditLabel } from "./EditLabel";
-import { EditList } from "./EditList";
-import { UserContext } from "../contexts/UserContext";
-import { isValidDate } from "../utils/Date";
+import "./../styles/Item.css";
 
 export const Item = (props: ItemProps) => {
     const [ edit, setEdit ] = useState(props.new ? true : false);

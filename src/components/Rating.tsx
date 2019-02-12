@@ -1,11 +1,10 @@
 import { createElement, useContext } from "react";
 import { RatingProps } from "../types/types";
 import { IconButton } from "./IconButton";
-import "./../styles/Rating.css";
-
+import { UserContext } from "../contexts/UserContext";
 import * as MdThumbsUp from "react-ionicons/lib/MdThumbsUp";
 import * as MdThumbsDown from "react-ionicons/lib/MdThumbsDown";
-import { UserContext } from "../contexts/UserContext";
+import "./../styles/Rating.css";
 
 export const Rating = (props: RatingProps) => {
     const [user, setUser] = useContext(UserContext);

@@ -1,9 +1,9 @@
 import { createElement, ChangeEvent, useContext } from 'react';
 import { sortMap } from '../utils/ItemSort';
 import { UserContext } from '../contexts/UserContext';
-import "./../styles/ItemListSettings.css";
 import { filterMap } from '../utils/ItemFilter';
 import { groupMap } from '../utils/ItemGroup';
+import "./../styles/ItemListSettings.css";
 
 export const ItemListSettings = () => {
   const [user, setUser] = useContext(UserContext);

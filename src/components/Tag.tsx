@@ -1,7 +1,7 @@
 import { createElement } from "react";
 import { TagProps } from "../types/types";
-import "./../styles/Tag.css";
 import { Color } from "./../utils/Color";
+import "./../styles/Tag.css";
 
 const tagColors = {
     "overdue": new Color(255, 108, 0),

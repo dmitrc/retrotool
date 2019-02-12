@@ -1,9 +1,8 @@
 import { createElement, useState } from "react";
 import { PersonProps } from "../types/types";
-import "./../styles/Person.css";
-import * as defaultImage from "./../images/default.png";
 import { EditLabel } from "./EditLabel";
-
+import * as defaultImage from "./../images/default.png";
+import "./../styles/Person.css";
 
 export const Person = (props: PersonProps) => {
     const defSrc = props.edit 

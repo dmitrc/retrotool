@@ -1,11 +1,11 @@
 import { createElement, useState, useContext } from "react";
 import { EditLabel } from "./EditLabel";
 import { IconButton } from "./IconButton";
+import { UserContext } from "../contexts/UserContext";
 import * as MdCheckmark from "react-ionicons/lib/MdCheckmark";
 import * as MdCreate from "react-ionicons/lib/MdCreate";
 import * as MdClose from "react-ionicons/lib/MdClose";
 import "./../styles/User.css";
-import { UserContext } from "../contexts/UserContext";
 
 export const User = () => {
     const [user, setUser] = useContext(UserContext);

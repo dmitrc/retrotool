@@ -5,9 +5,9 @@ import { User } from './User';
 import { NewItem } from './NewItem';
 import { UserContext } from '../contexts/UserContext';
 import { useLocalStorage } from '../hooks/useLocalStorage';
-import "./../styles/App.css";
-import { createSocket, destroySocket } from '../utils/Socket';
+import { destroySocket } from '../utils/Socket';
 import { ItemListSettings } from './ItemListSettings';
+import "./../styles/App.css";
 
 export const App = () => {
     const [user, setUser] = useLocalStorage<IUserContext>("user", null);
@@ -20,7 +20,7 @@ export const App = () => {
 
     return (
         <UserContext.Provider value={[user,setUser]}>
-            <User/>
+            <User />
             <NewItem />
             <ItemListSettings />
             <ItemList />

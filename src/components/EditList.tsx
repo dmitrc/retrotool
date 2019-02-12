@@ -1,8 +1,8 @@
 import { createElement, useState, useRef, useEffect } from "react";
 import { EditListProps } from "../types/types";
 import { EditLabel } from "./EditLabel";
-import "./../styles/EditList.css";
 import { hash } from "../utils/Hash";
+import "./../styles/EditList.css";
 
 export const EditList = (props: EditListProps) => {
   const [updateValues, setUpdateValues] = useState(props.values || []);

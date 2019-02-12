@@ -5,11 +5,11 @@ import { Loading } from './Loading';
 import { Error } from './Error';
 import { useSubscribe } from '../hooks/useSubscribe';
 import { emit } from '../utils/Socket';
-import "./../styles/ItemList.css";
 import { filterItems } from '../utils/ItemFilter';
 import { sortItems } from '../utils/ItemSort';
 import { groupItems } from '../utils/ItemGroup';
 import { UserContext } from '../contexts/UserContext';
+import "./../styles/ItemList.css";
 
 export const ItemList = () => {
   const itemsRes = useSubscribe("items");
