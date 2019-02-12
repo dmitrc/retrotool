@@ -7,6 +7,7 @@ import { UserContext } from '../contexts/UserContext';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import "./../styles/App.css";
 import { createSocket, destroySocket } from '../utils/Socket';
+import { ItemListSettings } from './ItemListSettings';
 
 export const App = () => {
     const [user, setUser] = useLocalStorage<IUserContext>("user", null);
@@ -21,6 +22,7 @@ export const App = () => {
         <UserContext.Provider value={[user,setUser]}>
             <User/>
             <NewItem />
+            <ItemListSettings />
             <ItemList />
         </UserContext.Provider>
     );

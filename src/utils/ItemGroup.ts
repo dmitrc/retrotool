@@ -1,4 +1,4 @@
-import { filterPinned, filterActive, filterComplete, filterActionItem, filterCurrentMonth, filterPastMonths } from "./ItemFilter";
+import { filterPinned, filterActive, filterComplete, filterActionItem, filterCurrentMonth, filterPastMonths, filterNotes } from "./ItemFilter";
 import { ItemProps, IGroup } from "../types/types";
 
 const activeGroups: IGroup[] = [
@@ -31,7 +31,7 @@ const actionItemGroups: IGroup[] = [
     },
     {
         id: "noop",
-        title: "No action items",
+        title: "Without action items",
         filter: (i: ItemProps) => {
             return !filterActionItem(i)
         }
@@ -51,15 +51,32 @@ const dateGroups = [
     }
 ];
 
-const groupMap = {
+const notesGroups = [
+    {
+        id: "notes",
+        title: "With notes",
+        filter: filterNotes
+    },
+    {
+        id: "no-notes",
+        title: "Without notes",
+        filter: (i: ItemProps) => {
+            return !filterNotes(i)
+        }
+    }
+];
+
+export const groupMap = {
     none: null,
     active: activeGroups,
-    actionItem: actionItemGroups,
-    date: dateGroups
+    "action item": actionItemGroups,
+    date: dateGroups,
+    notes: notesGroups
 }
 
-export const groupItems = (items: ItemProps[], groupStrategy: string = "none") => {
-    const groups = groupMap[groupStrategy];
+export const groupItems = (items: ItemProps[], groupStrategy?: string) => {
+    const prop = groupStrategy || "active";
+    const groups = groupMap[prop];
     const itemGroups = [];
     if (groups) {
         groups.forEach(c => {

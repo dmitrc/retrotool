@@ -30,13 +30,13 @@ export const ItemList = () => {
   if (itemsRes.data) {
     let items = [...itemsRes.data] as ItemProps[];
     
-    const filterBy = (user && user.filterBy) || "none";
+    const filterBy = (user && user.filterBy) || null;
     items = filterItems(items, filterBy);
 
-    const sortBy = (user && user.sortBy) || "default";
+    const sortBy = (user && user.sortBy) || null;
     items = sortItems(items, sortBy);
     
-    const groupBy = (user && user.groupBy) || "none";
+    const groupBy = (user && user.groupBy) || null;
     let itemsGroups = groupItems(items, groupBy);
 
     if (items.length > 0) {

@@ -1,0 +1,31 @@
+.itemlistpref {
+  display: flex;
+  flex-flow: row;
+  margin-bottom: 20px;
+}
+
+.itemlistpref span {
+  display: inline;
+}
+
+.itemlistpref select {
+  font-size: 14px;
+}
+
+.grouppref,
+.filterpref {
+  margin-left: 32px;
+  position: relative;
+}
+
+.grouppref:before,
+.filterpref:before {
+  content: " ";
+  width: 4px;
+  height: 4px;
+  border-radius: 2px;
+  background: #999;
+  position: absolute;
+  top: calc(50% - 2px);
+  left: -16px;
+}

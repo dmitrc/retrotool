@@ -10,8 +10,11 @@ const tagColors = {
     "action item": new Color(200, 0, 0),
     "completed": new Color(0, 200, 0),
     "vote": new Color(100, 0, 150),
+    "documentation": new Color(100, 0, 150),
     "wow": new Color(255, 0 , 200),
-    "low priority": new Color(153, 153, 153)
+    "low priority": new Color(153, 153, 153),
+    "long term": new Color(153, 153, 153),
+    "follow up": new Color(0, 140, 0)
 }
 
 export const Tag = (props: TagProps) => {

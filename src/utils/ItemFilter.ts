@@ -1,10 +1,6 @@
 import { ItemProps } from "../types/types";
 import { getDate } from "./Date";
 
-export const filterAll = (i: ItemProps) => {
-    return true;
-}
-
 export const filterActive = (i: ItemProps) => {
     return !i.complete;
 }
@@ -29,17 +25,24 @@ export const filterActionItem = (i: ItemProps) => {
     return !!i.actionItem;
 }
 
-const filterMap = {
-    none: filterAll,
-    current: filterCurrentMonth,
-    past: filterPastMonths,
-    actionItem: filterActionItem,
-    active: filterActive,
-    complete: filterComplete
+export const filterNotes = (i: ItemProps) => {
+    return i.notes && i.notes.length > 0;
 }
 
-export const filterItems = (items: ItemProps[], filterStrategy: string = "none") => {
-    const filter = filterMap[filterStrategy];
+export const filterMap = {
+    none: null,
+    current: filterCurrentMonth,
+    past: filterPastMonths,
+    "action item": filterActionItem,
+    active: filterActive,
+    complete: filterComplete,
+    notes: filterNotes,
+    pinned: filterPinned
+}
+
+export const filterItems = (items: ItemProps[], filterStrategy?: string) => {
+    const prop = filterStrategy || "none";
+    const filter = filterMap[prop];
     if (filter) {
         return items.filter(filter);
     }

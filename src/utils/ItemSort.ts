@@ -32,27 +32,42 @@ export const sortPinned = (a: ItemProps, b: ItemProps) => {
     return sortTruthyProperty(a, b, "pinned");
 }
 
-export const sortActionItem =  (a: ItemProps, b: ItemProps) => {
-    return sortTruthyProperty(a, b, "actionItem");
-}
-
 export const sortComplete = (a: ItemProps, b: ItemProps) => {
     return sortTruthyProperty(a, b, "complete", true);
 }
 
+export const sortActionItem =  (a: ItemProps, b: ItemProps) => {
+    const base = sortBase(a, b);
+    if (base) {
+        return base;
+    }
+    
+    return sortTruthyProperty(a, b, "actionItem");
+}
+
 export const sortRating = (a: ItemProps, b: ItemProps) => {
+    const base = sortBase(a, b);
+    if (base) {
+        return base;
+    }
+
     const ar = (a.likes || []).length - (a.dislikes || []).length;
     const br = (b.likes || []).length - (b.dislikes || []).length;
     return sortNumeric(ar, br) * -1;
 }
 
 export const sortDate = (a: ItemProps, b: ItemProps) => {
+    const base = sortBase(a, b);
+    if (base) {
+        return base;
+    }
+
     const ad = new Date(a.date);
     const bd = new Date(b.date);
     return sortNumeric(ad.getTime(), bd.getTime()) * -1;
 }
 
-export const sortDefault = (a: ItemProps, b: ItemProps) => {
+export const sortBase = (a: ItemProps, b: ItemProps) => {
    const pinned = sortPinned(a, b);
    if (pinned) {
        return pinned;
@@ -63,33 +78,19 @@ export const sortDefault = (a: ItemProps, b: ItemProps) => {
         return complete;
     }
     
-    const rating = sortRating(a, b);
-    if (rating) {
-        return rating;
-    }
-    
-    const actionItem = sortActionItem(a, b);
-    if (actionItem) {
-        return actionItem;
-    }
-    
-    const date = sortDate(a, b);
-    if (date) {
-        return date;
-    }
-    
    return 0;
 }
 
-
-const sortMap = {
-    none: null,
-    default: sortDefault,
-    rating: sortRating
+export const sortMap = {
+    none: sortBase,
+    rating: sortRating,
+    date: sortDate,
+    "action item": sortActionItem
 }
 
-export const sortItems = (items: ItemProps[], sortStrategy: string = "none") => {
-    const sort = sortMap[sortStrategy];
+export const sortItems = (items: ItemProps[], sortStrategy?: string) => {
+    const prop = sortStrategy || "rating"
+    const sort = sortMap[prop];
     if (sort) {
         return items.sort(sort);
     }
