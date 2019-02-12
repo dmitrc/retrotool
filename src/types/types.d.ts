@@ -2,7 +2,10 @@ import { Component, CSSProperties, Ref } from "react";
 
 
 export interface IUserContext {
-  alias?: string
+  alias?: string,
+  groupBy?: string,
+  sortBy?: string,
+  filterBy?: string
 }
 
 export interface ItemProps {

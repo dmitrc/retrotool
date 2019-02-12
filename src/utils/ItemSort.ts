@@ -2,10 +2,10 @@ import { ItemProps } from "../types/types";
 
 const sortTruthy = (a: any, b: any) => {
     if (a && !b) {
-        return 1;
+        return -1;
     }
     else if (!a && b) {
-        return -1;
+        return 1;
     }
     return 0;
 }
@@ -33,7 +33,7 @@ export const sortPinned = (a: ItemProps, b: ItemProps) => {
 }
 
 export const sortActionItem =  (a: ItemProps, b: ItemProps) => {
-    return sortTruthyProperty(a, b, "actionItem", true);
+    return sortTruthyProperty(a, b, "actionItem");
 }
 
 export const sortComplete = (a: ItemProps, b: ItemProps) => {
@@ -52,7 +52,7 @@ export const sortDate = (a: ItemProps, b: ItemProps) => {
     return sortNumeric(ad.getTime(), bd.getTime()) * -1;
 }
 
-export const sortItem = (a: ItemProps, b: ItemProps) => {
+export const sortDefault = (a: ItemProps, b: ItemProps) => {
    const pinned = sortPinned(a, b);
    if (pinned) {
        return pinned;
@@ -63,20 +63,35 @@ export const sortItem = (a: ItemProps, b: ItemProps) => {
         return complete;
     }
     
-    const date = sortDate(a, b);
-    if (date) {
-        return date;
+    const rating = sortRating(a, b);
+    if (rating) {
+        return rating;
     }
-
+    
     const actionItem = sortActionItem(a, b);
     if (actionItem) {
         return actionItem;
     }
     
-    const rating = sortRating(a, b);
-    if (rating) {
-        return rating;
+    const date = sortDate(a, b);
+    if (date) {
+        return date;
     }
-
+    
    return 0;
+}
+
+
+const sortMap = {
+    none: null,
+    default: sortDefault,
+    rating: sortRating
+}
+
+export const sortItems = (items: ItemProps[], sortStrategy: string = "none") => {
+    const sort = sortMap[sortStrategy];
+    if (sort) {
+        return items.sort(sort);
+    }
+    return items;
 }

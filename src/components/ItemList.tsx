@@ -6,15 +6,15 @@ import { Error } from './Error';
 import { useSubscribe } from '../hooks/useSubscribe';
 import { emit } from '../utils/Socket';
 import "./../styles/ItemList.css";
-import { filterAll } from '../utils/ItemFilter';
-import { sortItem } from '../utils/ItemSort';
+import { filterItems } from '../utils/ItemFilter';
+import { sortItems } from '../utils/ItemSort';
 import { groupItems } from '../utils/ItemGroup';
 import { UserContext } from '../contexts/UserContext';
 
 export const ItemList = () => {
   const itemsRes = useSubscribe("items");
   const [user, setUser] = useContext(UserContext);
-  
+
   useEffect(() => {
     emit("getItems");
   }, []);
@@ -29,10 +29,16 @@ export const ItemList = () => {
   }
   if (itemsRes.data) {
     let items = [...itemsRes.data] as ItemProps[];
-    //items = items.filter(filterAll);
-    items = items.sort(sortItem);
     
-    let itemsGroups = groupItems(items, "active");
+    const filterBy = (user && user.filterBy) || "none";
+    items = filterItems(items, filterBy);
+
+    const sortBy = (user && user.sortBy) || "default";
+    items = sortItems(items, sortBy);
+    
+    const groupBy = (user && user.groupBy) || "none";
+    let itemsGroups = groupItems(items, groupBy);
+
     if (items.length > 0) {
       return (
         <div className="itemroot">

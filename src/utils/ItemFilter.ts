@@ -28,3 +28,20 @@ export const filterPastMonths = (i: ItemProps) => {
 export const filterActionItem = (i: ItemProps) => {
     return !!i.actionItem;
 }
+
+const filterMap = {
+    none: filterAll,
+    current: filterCurrentMonth,
+    past: filterPastMonths,
+    actionItem: filterActionItem,
+    active: filterActive,
+    complete: filterComplete
+}
+
+export const filterItems = (items: ItemProps[], filterStrategy: string = "none") => {
+    const filter = filterMap[filterStrategy];
+    if (filter) {
+        return items.filter(filter);
+    }
+    return items;
+}
