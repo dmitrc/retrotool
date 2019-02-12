@@ -4,7 +4,7 @@ import { Person } from "./Person";
 import { Rating } from "./Rating";
 import { Tag } from "./Tag";
 import "./../styles/Item.css";
-import { emit } from "../socket";
+import { emit } from "../utils/Socket";
 import { IconButton } from "./IconButton";
 import * as MdCheckmark from "react-ionicons/lib/MdCheckmark";
 import * as MdTrash from "react-ionicons/lib/MdTrash";
@@ -15,6 +15,7 @@ import * as MdCheckmarkCircleOutline from "react-ionicons/lib/MdCheckmarkCircleO
 import { EditLabel } from "./EditLabel";
 import { EditList } from "./EditList";
 import { UserContext } from "../contexts/UserContext";
+import { isValidDate } from "../utils/Date";
 
 export const Item = (props: ItemProps) => {
     const [ edit, setEdit ] = useState(props.new ? true : false);
@@ -70,6 +71,10 @@ export const Item = (props: ItemProps) => {
         }
         if (updateItem.date === ""|| (props.new && !updateItem.date)) {
             alert("Date is a required field");
+            return;
+        }
+        if (updateItem.date && !isValidDate(updateItem.date)) {
+            alert("Date is specified in incorrect format (eg Jan 2019)");
             return;
         }
 

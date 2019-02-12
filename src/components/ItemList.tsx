@@ -1,14 +1,20 @@
-import { createElement, useEffect } from 'react';
-import { ItemProps, ItemListProps } from '../types/types';
+import { createElement, useEffect, useContext } from 'react';
+import { ItemProps } from '../types/types';
 import { Item } from './Item';
 import { Loading } from './Loading';
 import { Error } from './Error';
-import { useSocket } from './../hooks/useSocket';
-import { emit } from '../socket';
+import { useSubscribe } from '../hooks/useSubscribe';
+import { emit } from '../utils/Socket';
 import "./../styles/ItemList.css";
+import { filterAll } from '../utils/ItemFilter';
+import { sortItem } from '../utils/ItemSort';
+import { groupItems } from '../utils/ItemGroup';
+import { UserContext } from '../contexts/UserContext';
 
-export const ItemList = (props: ItemListProps) => {
-  const itemsRes = useSocket("items");
+export const ItemList = () => {
+  const itemsRes = useSubscribe("items");
+  const [user, setUser] = useContext(UserContext);
+  
   useEffect(() => {
     emit("getItems");
   }, []);
@@ -22,29 +28,11 @@ export const ItemList = (props: ItemListProps) => {
     )
   }
   if (itemsRes.data) {
-    let items = itemsRes.data as ItemProps[];
-    let itemsGroups = [];
-
-    if (props.filter) {
-      items = items.filter(props.filter);
-    }
-
-    if (props.sort) {
-      items = items.sort(props.sort);
-    }
-
-    if (props.split) {
-      props.split.forEach(c => {
-        const gi = items.filter(c.filter);
-        if (gi && gi.length > 0) {
-          itemsGroups.push({ id: c.id, title: c.title, items: gi});
-        }
-      });
-    }
-    else {
-      itemsGroups.push({ id: "main", title: null, items: items });
-    }
-
+    let items = [...itemsRes.data] as ItemProps[];
+    //items = items.filter(filterAll);
+    items = items.sort(sortItem);
+    
+    let itemsGroups = groupItems(items, "active");
     if (items.length > 0) {
       return (
         <div className="itemroot">

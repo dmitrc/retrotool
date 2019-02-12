@@ -55,16 +55,10 @@ export interface ErrorProps {
   text: string
 }
 
-export interface SplitSettings {
+export interface IGroup {
   id: string,
   title: string,
   filter: (i: ItemProps) => boolean
-}
-
-export interface ItemListProps {
-  filter?: (i: ItemProps) => boolean,
-  sort?: (a: ItemProps, b: ItemProps) => number,
-  split?: SplitSettings[]
 }
 
 export interface EditLabelProps {
