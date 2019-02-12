@@ -9,7 +9,9 @@ import { UserContext } from "../contexts/UserContext";
 
 export const User = () => {
     const [user, setUser] = useContext(UserContext);
-    const [edit, setEdit] = useState(!user);
+
+    const alias = (user && user.alias) || null;
+    const [edit, setEdit] = useState(!alias);
 
     let newAlias = "";
 
@@ -22,7 +24,10 @@ export const User = () => {
     }
 
     const handleSubmit = () => {
-        setUser(newAlias);
+        const u = {...user} || {};
+        u.alias = newAlias;
+
+        setUser(u);
         setEdit(!newAlias);
     }
 
@@ -34,7 +39,7 @@ export const User = () => {
     return (
         <div className="user">
             {!edit ? <span>Logged in as: </span> : null}
-            <EditLabel edit={edit} placeholder="Your alias" onBlur={handleBlur} value={user} className="alias" />
+            <EditLabel edit={edit} placeholder="Your alias" onBlur={handleBlur} value={alias} className="alias" />
             {!edit ? <IconButton icon={MdCreate} onClick={handleEdit} /> : null}
             {edit ? <IconButton icon={MdCheckmark} onClick={handleSubmit} /> : null}
             {edit && user ? <IconButton icon={MdClose} onClick={handleCancel} /> : null}

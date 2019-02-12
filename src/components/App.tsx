@@ -2,7 +2,7 @@ import { createElement } from 'react';
 import { ItemList } from './ItemList';
 import { Item } from './Item';
 import "./../styles/App.css";
-import { ItemProps } from '../types/types';
+import { ItemProps, IUserContext } from '../types/types';
 import { User } from './User';
 import { UserContext } from '../contexts/UserContext';
 import { useLocalStorage } from '../hooks/useLocalStorage';
@@ -110,7 +110,7 @@ export const App = () => {
         }
     ];
 
-    const [user, setUser] = useLocalStorage<string>("user", null);
+    const [user, setUser] = useLocalStorage<IUserContext>("user", null);
     return (
         <UserContext.Provider value={[user,setUser]}>
             <User />

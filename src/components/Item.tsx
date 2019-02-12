@@ -32,8 +32,8 @@ export const Item = (props: ItemProps) => {
     }
 
     const handleLike = () => {
-        if (user) {
-            emit("likeItem", props._id, user);
+        if (user && user.alias) {
+            emit("likeItem", props._id, user.alias);
         }
         else {
             alert("Please input your alias on the top of the page to like items");
@@ -41,8 +41,8 @@ export const Item = (props: ItemProps) => {
     }
 
     const handleDislike = () => {
-        if (user) {
-            emit("dislikeItem", props._id, user);
+        if (user && user.alias) {
+            emit("dislikeItem", props._id, user.alias);
         }
         else {
             alert("Please input your alias on the top of the page to dislike items");

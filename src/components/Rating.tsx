@@ -19,12 +19,24 @@ export const Rating = (props: RatingProps) => {
 
     const didLike = () => {
         const likes = props.likes || [];
-        return likes.indexOf(user) > -1;
+        const alias = user && user.alias;
+
+        if (alias) {
+            return likes.indexOf(alias) > -1;
+        }
+
+        return false;
     }
 
     const didDislike = () => {
-        const dislikes = props.dislikes || [];
-        return dislikes.indexOf(user) > -1;
+        const dislikes = props.dislikes || []; 
+        const alias = user && user.alias;
+
+        if (alias) {
+            return dislikes.indexOf(alias) > -1;
+        }
+
+        return false;
     }
 
     return (

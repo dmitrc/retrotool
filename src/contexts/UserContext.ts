@@ -1,2 +1,4 @@
 import { createContext } from "react";
-export const UserContext = createContext([null, null] as [string, (s: string) => void]);
+import { IUserContext } from "../types/types";
+
+export const UserContext = createContext([null, null] as [IUserContext, (s: IUserContext) => void]);

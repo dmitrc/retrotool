@@ -1,5 +1,10 @@
 import { Component, CSSProperties, Ref } from "react";
 
+
+export interface IUserContext {
+  alias?: string
+}
+
 export interface ItemProps {
   _id?: string,
   title?: string,
