@@ -1,4 +1,7 @@
 .itemlist > .title {
   font-size: 18px;
   color: #444;
+  margin: 10px 0;
+  cursor: pointer;
+  display: inline-block;
 }

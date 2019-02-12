@@ -1,7 +1,7 @@
 import { createElement, ChangeEvent, useContext } from 'react';
 import { sortMap } from '../utils/ItemSort';
 import { UserContext } from '../contexts/UserContext';
-import { filterMap } from '../utils/ItemFilter';
+import { getFilterMap } from '../utils/ItemFilter';
 import { groupMap } from '../utils/ItemGroup';
 import "./../styles/ItemListSettings.css";
 
@@ -28,7 +28,7 @@ export const ItemListSettings = () => {
     }
   }
 
-  const filterKeys = Object.keys(filterMap);
+  const filterKeys = Object.keys(getFilterMap(user && user.alias));
   const handleFilterChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const v = e.target && e.target.value;
     if (v) {

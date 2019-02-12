@@ -37,7 +37,17 @@ export const filterRating = (i: ItemProps) => {
     return (i.likes || []).length - (i.dislikes || []).length > 0;
 }
 
-export const filterMap = {
+export const filterOwner = (i: ItemProps) => {
+    return !!i.owner;
+}
+
+export const filterOwned = (alias: string) => {
+    return (i: ItemProps) => {
+        return i.owner == alias;
+    }
+}
+
+const filterMap = {
     none: null,
     active: filterActive,
     complete: filterComplete,
@@ -46,13 +56,25 @@ export const filterMap = {
     notes: filterNotes,
     current: filterCurrentMonth,
     past: filterPastMonths,
+    owner: filterOwner,
     tags: filterTags,
     rating: filterRating
 }
 
-export const filterItems = (items: ItemProps[], filterStrategy?: string) => {
+export const getFilterMap = (alias: string) => {
+    if (!alias) {
+        return filterMap;
+    }
+
+    const fm = {...filterMap} as any;
+    fm.mine = filterOwned(alias);
+    
+    return fm;
+}
+
+export const filterItems = (items: ItemProps[], filterStrategy?: string, alias?: string) => {
     const prop = filterStrategy || "none";
-    const filter = filterMap[prop];
+    const filter = getFilterMap(alias)[prop];
     if (filter) {
         return items.filter(filter);
     }

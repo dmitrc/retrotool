@@ -91,7 +91,8 @@ export const sortBase = (a: ItemProps, b: ItemProps) => {
 }
 
 export const sortMap = {
-    none: sortBase,
+    none: null,
+    base: sortBase,
     rating: sortRating,
     date: sortDate,
     "action item": sortActionItem,

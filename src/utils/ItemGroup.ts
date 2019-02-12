@@ -1,7 +1,6 @@
 import { filterPinned, filterActive, filterComplete, filterActionItem, filterCurrentMonth, filterPastMonths, filterNotes } from "./ItemFilter";
 import { ItemProps } from "../types/types";
 import { sortNumeric } from "./ItemSort";
-import { array } from "prop-types";
 
 const activeGroups = () => [
     {
@@ -91,7 +90,6 @@ const uniqueItemGroups = (items: ItemProps[], prop: string, sort?: (a: string, b
         }
     });
 
-    console.log(`group by ${prop}`, groups);
     return groups;
 }
 
