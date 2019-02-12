@@ -1,6 +1,6 @@
 import { ItemProps } from "../types/types";
 
-const sortTruthy = (a: any, b: any) => {
+export const sortTruthy = (a: any, b: any) => {
     if (a && !b) {
         return -1;
     }
@@ -10,11 +10,11 @@ const sortTruthy = (a: any, b: any) => {
     return 0;
 }
 
-const sortTruthyProperty = (a: ItemProps, b: ItemProps, prop: string, invert: boolean = false) => {
+export const sortTruthyProperty = (a: ItemProps, b: ItemProps, prop: string, invert: boolean = false) => {
     return sortTruthy(a[prop], b[prop]) * (invert ? -1 : 1);
 }
 
-const sortNumeric = (a: number, b: number) => {
+export const sortNumeric = (a: number | string, b: number | string) => {
     if (a < b) {
         return -1;
     }
@@ -24,7 +24,7 @@ const sortNumeric = (a: number, b: number) => {
     return 0;
 }
 
-const sortNumericProperty = (a: ItemProps, b: ItemProps, prop: string, invert: boolean = false) => {
+export const sortNumericProperty = (a: ItemProps, b: ItemProps, prop: string, invert: boolean = false) => {
     return sortNumeric(a[prop], b[prop]) * (invert ? -1 : 1);
 }
 
@@ -67,6 +67,15 @@ export const sortDate = (a: ItemProps, b: ItemProps) => {
     return sortNumeric(ad.getTime(), bd.getTime()) * -1;
 }
 
+export const sortTags = (a: ItemProps, b: ItemProps) => {
+    const base = sortBase(a, b);
+    if (base) {
+        return base;
+    }
+
+    return sortNumeric((a.tags || []).length, (b.tags || []).length) * -1;
+}
+
 export const sortBase = (a: ItemProps, b: ItemProps) => {
    const pinned = sortPinned(a, b);
    if (pinned) {
@@ -85,7 +94,8 @@ export const sortMap = {
     none: sortBase,
     rating: sortRating,
     date: sortDate,
-    "action item": sortActionItem
+    "action item": sortActionItem,
+    tags: sortTags
 }
 
 export const sortItems = (items: ItemProps[], sortStrategy?: string) => {

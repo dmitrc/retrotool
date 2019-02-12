@@ -29,15 +29,25 @@ export const filterNotes = (i: ItemProps) => {
     return i.notes && i.notes.length > 0;
 }
 
+export const filterTags = (i: ItemProps) => {
+    return i.tags && i.tags.length > 0;
+}
+
+export const filterRating = (i: ItemProps) => {
+    return (i.likes || []).length - (i.dislikes || []).length > 0;
+}
+
 export const filterMap = {
     none: null,
-    current: filterCurrentMonth,
-    past: filterPastMonths,
-    "action item": filterActionItem,
     active: filterActive,
     complete: filterComplete,
+    pinned: filterPinned,
+    "action item": filterActionItem,
     notes: filterNotes,
-    pinned: filterPinned
+    current: filterCurrentMonth,
+    past: filterPastMonths,
+    tags: filterTags,
+    rating: filterRating
 }
 
 export const filterItems = (items: ItemProps[], filterStrategy?: string) => {

@@ -1,7 +1,9 @@
 import { filterPinned, filterActive, filterComplete, filterActionItem, filterCurrentMonth, filterPastMonths, filterNotes } from "./ItemFilter";
-import { ItemProps, IGroup } from "../types/types";
+import { ItemProps } from "../types/types";
+import { sortNumeric } from "./ItemSort";
+import { array } from "prop-types";
 
-const activeGroups: IGroup[] = [
+const activeGroups = () => [
     {
         id: "pinned",
         title: "Pinned items",
@@ -23,7 +25,7 @@ const activeGroups: IGroup[] = [
     }
 ];
 
-const actionItemGroups: IGroup[] = [
+const actionItemGroups = () => [
     {
         id: "action",
         title: "With action items",
@@ -38,20 +40,7 @@ const actionItemGroups: IGroup[] = [
     }
 ];
 
-const dateGroups = [
-    {
-        id: "current",
-        title: "Current month",
-        filter: filterCurrentMonth
-    },
-    {
-        id: "past",
-        title: "Previous months",
-        filter: filterPastMonths
-    }
-];
-
-const notesGroups = [
+const notesGroups  = () => [
     {
         id: "notes",
         title: "With notes",
@@ -66,17 +55,76 @@ const notesGroups = [
     }
 ];
 
+const uniqueItemGroups = (items: ItemProps[], prop: string, sort?: (a: string, b: string) => number) => {
+    let keys = [];
+    items.forEach(i => {
+        const p = i[prop];
+        if (p instanceof Array) {
+            keys = keys.concat(p);
+        }
+        else {
+            keys.push(p);
+        }
+    });
+
+    keys = keys.filter((k, i) => k && keys.indexOf(k) === i);
+    keys = keys.sort(sort);
+
+    const groups = [];
+    keys.forEach(k => {
+        groups.push({
+            id: k.replace(" ", "-"),
+            title: k,
+            filter: (i: ItemProps) => {
+                const p = i[prop];
+                return p instanceof Array ? p.indexOf(k) > -1 : p === k;
+            }
+        });
+    });
+
+    groups.push({
+        id: "none",
+        title: "None",
+        filter: (i: ItemProps) => {
+            const p = i[prop];
+            return p instanceof Array ? (!p || p.length == 0) : keys.indexOf(p) == -1
+        }
+    });
+
+    console.log(`group by ${prop}`, groups);
+    return groups;
+}
+
+const dateGroups = (items: ItemProps[]) => {
+    return uniqueItemGroups(items, "date", (a, b) => {
+        const ad = new Date(a);
+        const bd = new Date(b);
+        
+        return sortNumeric(ad.getTime(), bd.getTime()) * -1;
+    });
+}
+
+const tagGroups = (items: ItemProps[]) => {
+    return uniqueItemGroups(items, "tags");
+}
+
+const ownerGroups = (items: ItemProps[]) => {
+    return uniqueItemGroups(items, "owner");
+}
+
 export const groupMap = {
     none: null,
     active: activeGroups,
-    "action item": actionItemGroups,
     date: dateGroups,
-    notes: notesGroups
+    "action item": actionItemGroups,
+    notes: notesGroups,
+    owner: ownerGroups,
+    tags: tagGroups
 }
 
 export const groupItems = (items: ItemProps[], groupStrategy?: string) => {
     const prop = groupStrategy || "active";
-    const groups = groupMap[prop];
+    const groups = groupMap[prop] && groupMap[prop](items);
     const itemGroups = [];
     if (groups) {
         groups.forEach(c => {
