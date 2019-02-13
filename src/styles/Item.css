@@ -12,6 +12,10 @@
     width: 100%;
 }
 
+.item .spacer {
+    flex-grow: 1;
+}
+
 .item .c1 {
     display: flex;
     flex-flow: column;

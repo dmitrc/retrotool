@@ -132,6 +132,7 @@ export const Item = (props: ItemProps) => {
             <div className="c1">
                 <EditLabel edit={edit} placeholder="Date" value={props.date} className="date" onUpdate={handleDateUpdate} />
                 <Person edit={edit} alias={props.owner} onUpdate={handleOwnerUpdate} />
+                <div className="spacer" />
                 {!edit ? <Rating onLike={handleLike} onDislike={handleDislike} likes={props.likes} dislikes={props.dislikes} /> : null}
                 <div className="buttons">
                     { edit && !props.new ? <IconButton icon={MdTrash} onClick={handleDelete} /> : null }
