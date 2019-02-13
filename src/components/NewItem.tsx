@@ -4,6 +4,6 @@ import { getDate } from "../utils/Date";
 
 export const NewItem = () => {
     return (
-        <Item new={true} tags={["triage"]} date={getDate()} />
+        <Item new={true} date={getDate()} />
     )
 }
