@@ -16,7 +16,7 @@ export const User = () => {
     let newAlias = "";
 
     const handleBlur = (v: string) => {
-        newAlias = v;
+        newAlias = (v && v.toLowerCase()) || null;
     }
 
     const handleEdit = () => {

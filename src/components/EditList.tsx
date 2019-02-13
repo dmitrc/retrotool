@@ -12,6 +12,9 @@ export const EditList = (props: EditListProps) => {
 
   useEffect(() => {
     if (!props.edit) {
+      setUpdateValues([]);
+    }
+    else {
       setUpdateValues(props.values || []);
     }
   }, [props.edit]);

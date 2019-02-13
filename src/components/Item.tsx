@@ -123,13 +123,12 @@ export const Item = (props: ItemProps) => {
     }
 
     const handleTagsUpdate = (v: string[]) => {
-        updateItem.tags = v;
+        updateItem.tags = (v && v.map(s => s.toLowerCase())) || null;
     }
 
     const ownItem = user && user.alias && props.owner && user.alias == props.owner;
-
     return (
-        <div className={"item " + (props.actionItem ? "action " : "") + (props.complete ? "complete " : "") + (props.pinned ? "pinned " : "") + (ownItem ? "own " : null)}>
+        <div className={"item " + (props.actionItem ? "action " : "") + (props.complete ? "complete " : "") + (props.pinned ? "pinned " : "") + (ownItem ? "own " : "")}>
             <div className="c1">
                 <EditLabel edit={edit} placeholder="Date" value={props.date} className="date" onUpdate={handleDateUpdate} />
                 <Person edit={edit} alias={props.owner} onUpdate={handleOwnerUpdate} />
