@@ -19,11 +19,13 @@
 .item .c1 {
     display: flex;
     flex-flow: column;
+    flex-basis: 124px;
     min-width: 124px;
 }
 
 .item .c3 {
     display: flex;
+    flex-basis: 132px;
     min-width: 132px;
     flex-flow: column;
     justify-content: space-between;
