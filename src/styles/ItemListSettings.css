@@ -13,13 +13,15 @@
 }
 
 .grouppref,
-.filterpref {
+.filterpref,
+.livepref {
   margin-left: 32px;
   position: relative;
 }
 
 .grouppref:before,
-.filterpref:before {
+.filterpref:before,
+.livepref:before {
   content: " ";
   width: 4px;
   height: 4px;

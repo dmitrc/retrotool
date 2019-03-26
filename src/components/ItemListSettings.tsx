@@ -38,6 +38,13 @@ export const ItemListSettings = () => {
     }
   }
 
+  const handleLiveChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const v = e.target && e.target.checked;
+    const u = {...user};
+    u.live = v;
+    setUser(u);
+  }
+
   return (
     <div className="itemlistpref">
       <div className="sortpref">
@@ -57,6 +64,10 @@ export const ItemListSettings = () => {
         <select onChange={handleFilterChange} defaultValue={(user && user.filterBy) || "none"}>
           { filterKeys.map(k => <option value={k} key={k}>{k}</option>)}
         </select>
+      </div>
+      <div className="livepref">
+        <span>Live updates: </span>
+        <input type="checkbox" onChange={handleLiveChange} defaultChecked={user && user.live} />
       </div>
     </div>
   )

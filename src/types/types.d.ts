@@ -5,7 +5,8 @@ export interface IUserContext {
   alias?: string,
   groupBy?: string,
   sortBy?: string,
-  filterBy?: string
+  filterBy?: string,
+  live?: boolean
 }
 
 export interface ItemProps {
@@ -88,4 +89,8 @@ export interface EditListProps {
 
 export interface TagProps {
   value?: string
+}
+
+export interface RefreshDataProps {
+  onClick?: () => void
 }

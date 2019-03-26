@@ -10,10 +10,11 @@ import { sortItems } from '../utils/ItemSort';
 import { groupItems } from '../utils/ItemGroup';
 import { UserContext } from '../contexts/UserContext';
 import "./../styles/ItemList.css";
+import { RefreshData } from './RefreshData';
 
 export const ItemList = () => {
-  const itemsRes = useSubscribe("items");
   const [user, setUser] = useContext(UserContext);
+  const [itemsRes, needsUpdate, update] = useSubscribe("items", user && user.live);
   const [hiddenGroups, setHiddenGroups] = useState([]);
 
   useEffect(() => {
@@ -63,6 +64,7 @@ export const ItemList = () => {
     if (items.length > 0) {
       return (
         <div className="itemroot">
+          { needsUpdate ? <RefreshData onClick={update} /> : null }
           { itemsGroups.map(g => {
             const { id, title } = g;
             const isVisible = hiddenGroups.indexOf(id) == -1;

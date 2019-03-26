@@ -15,9 +15,6 @@
 
 .iconb svg {
     fill: #000;
-}
-
-.iconb svg {
     display: inline-block;
     vertical-align: middle;
 }
@@ -25,4 +22,5 @@
 .iconb span {
     display: inline-block;
     vertical-align: middle;
+    margin-left: 5px;
 }

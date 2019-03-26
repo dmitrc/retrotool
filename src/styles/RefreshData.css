@@ -1,0 +1,21 @@
+.refresh {
+    position: fixed;
+    padding: 10px;
+    bottom: 20px;
+    right: 20px;
+    opacity: .7;
+    background: #008;
+    color: #fff;
+}
+
+.refresh .btns {
+    display: inline-block;
+}
+
+.refresh .iconb {
+    color: #fff;
+}
+
+.refresh .iconb svg {
+    fill: #fff;
+}

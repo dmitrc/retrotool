@@ -73,7 +73,7 @@ export const getFilterMap = (alias: string) => {
 }
 
 export const filterItems = (items: ItemProps[], filterStrategy?: string, alias?: string) => {
-    const prop = filterStrategy || "none";
+    const prop = filterStrategy || "active";
     const filter = getFilterMap(alias)[prop];
     if (filter) {
         return items.filter(filter);

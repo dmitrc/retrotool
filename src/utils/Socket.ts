@@ -3,7 +3,7 @@ import * as io from "socket.io-client";
 let socket: SocketIOClient.Socket = null;
 let currentUrl: string = null;
 
-export const createSocket = (url: string = "http://localhost:8002") => {
+export const createSocket = (url: string = "http://dmitc-dev:8002") => {
    if (socket && currentUrl == url) {
        return socket;
    }

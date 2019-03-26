@@ -121,7 +121,7 @@ export const groupMap = {
 }
 
 export const groupItems = (items: ItemProps[], groupStrategy?: string) => {
-    const prop = groupStrategy || "active";
+    const prop = groupStrategy || "date";
     const groups = groupMap[prop] && groupMap[prop](items);
     const itemGroups = [];
     if (groups) {

@@ -11,9 +11,7 @@ export const Rating = (props: RatingProps) => {
 
     const getRating = () => {
         const likes = props.likes || [];
-        const dislikes = props.dislikes || [];
-
-        return likes.length - dislikes.length;
+        return likes.length;
     }
 
     const didLike = () => {
@@ -27,22 +25,10 @@ export const Rating = (props: RatingProps) => {
         return false;
     }
 
-    const didDislike = () => {
-        const dislikes = props.dislikes || []; 
-        const alias = user && user.alias;
-
-        if (alias) {
-            return dislikes.indexOf(alias) > -1;
-        }
-
-        return false;
-    }
-
     return (
         <div className="rating">
-            <IconButton icon={MdThumbsDown} className={didDislike() ? "dislike" : null} onClick={props.onDislike} />
-            <span>{getRating()}</span>
             <IconButton icon={MdThumbsUp} className={didLike() ? "like" : null} onClick={props.onLike}  />
+            <span>{getRating()}</span>
         </div>
     )
 }
