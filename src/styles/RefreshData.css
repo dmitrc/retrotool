@@ -6,10 +6,12 @@
     opacity: .7;
     background: #008;
     color: #fff;
+    border-radius: 10px;
 }
 
-.refresh .btns {
-    display: inline-block;
+.refresh.hide {
+    padding: 0;
+    border-radius: 20px;
 }
 
 .refresh .iconb {

@@ -8,19 +8,31 @@ import '../styles/RefreshData.css';
 export const RefreshData = (props: RefreshDataProps) => {
     const [show, setShow] = useState(true);
 
-    function handleDismiss() {
+    function handleHide() {
         setShow(false);
     }
 
+    function handleShow() {
+        setShow(true);
+    }
+
+    if (show) {
+        return (
+            <div className="refresh">
+                <div className="desc">
+                    Updates to the feed are available!
+                </div>
+                <div className="btns">
+                    <IconButton icon={MdRefresh} onClick={props.onClick} text="Refresh" />
+                    <IconButton icon={MdClose} onClick={handleHide} text="Dismiss" />
+                </div>
+            </div>
+        )
+    }
+
     return (
-        <div className="refresh" style={{display: show ? "block" : "none"}}>
-            <div className="desc">
-                Updates to the feed are available!
-            </div>
-            <div className="btns">
-                <IconButton icon={MdRefresh} onClick={props.onClick} text="Refresh" />
-                <IconButton icon={MdClose} onClick={handleDismiss} text="Dismiss" />
-            </div>
+        <div className="refresh hide">
+             <IconButton icon={MdRefresh} onClick={handleShow} />
         </div>
     )
 }
