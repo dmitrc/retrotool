@@ -37,6 +37,11 @@ export const ItemList = () => {
   }, [itemsRes]);
 
   const handleLocalUpdate = (id: string, update: ItemProps) => {
+    if (user.live) {
+      // This update will be picked up by live updater -> no action needed
+      return;
+    }
+
     let items = [...localItems];
     const affectedItems = items.filter(i => i._id == id);
 
@@ -56,15 +61,20 @@ export const ItemList = () => {
   }
 
   const handleLocalDelete = (id: string) => {
-      let items = [...localItems];
-      const affectedItems = items.filter(i => i._id == id);
-
-      if (affectedItems.length == 1) {
-        // Delete an existing item
-        items.splice(items.indexOf(affectedItems[0]), 1);
+      if (user.live) {
+        // This update will be picked up by live updater -> no action needed
+        return;
       }
-      
-      setLocalItems(items);
+
+    let items = [...localItems];
+    const affectedItems = items.filter(i => i._id == id);
+
+    if (affectedItems.length == 1) {
+      // Delete an existing item
+      items.splice(items.indexOf(affectedItems[0]), 1);
+    }
+    
+    setLocalItems(items);
   }
 
   useEffect(() => {
