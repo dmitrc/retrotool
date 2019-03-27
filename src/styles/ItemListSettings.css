@@ -1,7 +1,6 @@
 .itemlistpref {
   display: flex;
   flex-flow: row;
-  margin-bottom: 20px;
 }
 
 .itemlistpref span {
