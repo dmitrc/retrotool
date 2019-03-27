@@ -17,6 +17,7 @@ export const Timer = () => {
     const [running, setRunning] = useState(false);
     const [ringing, setRinging] = useState(false);
     const [duration, setDuration] = useState(defaultDuration);
+    const [lastDuration, setLastDuration] = useState(defaultDuration);
 
     useInterval(() => {
         if (running) {
@@ -27,6 +28,7 @@ export const Timer = () => {
             if (newTime == 0) {
                 setRunning(false);
                 setRinging(true);
+                setDurationFair(lastDuration);
             }
         }
     }, 1000);
@@ -70,6 +72,7 @@ export const Timer = () => {
 
     function setDurationFair(v) {
         setDuration(v);
+        setLastDuration(v);
         if (inputRef && inputRef.current) {
             inputRef.current.value = v;
         }
@@ -91,7 +94,7 @@ export const Timer = () => {
     }
 
     function handleRefresh() {
-        setDurationFair(defaultDuration);
+        setDurationFair(lastDuration);
         setRinging(false);
     }
 
