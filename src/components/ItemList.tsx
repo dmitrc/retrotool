@@ -11,10 +11,15 @@ import { groupItems } from '../utils/ItemGroup';
 import { UserContext } from '../contexts/UserContext';
 import "./../styles/ItemList.css";
 import { RefreshData } from './RefreshData';
+import { getDate } from "../utils/Date";
 
 export const ItemList = () => {
   const [user, setUser] = useContext(UserContext);
   const [itemsRes, needsUpdate, update] = useSubscribe("items", user && user.live);
+  const [addedItem] = useSubscribe("addedItem", true);
+  const [editedItem] = useSubscribe("editedItem", true);
+  const [deletedItem] = useSubscribe("deletedItem", true);
+  const [localItems, setLocalItems] = useState([] as ItemProps[]);
   const [hiddenGroups, setHiddenGroups] = useState([]);
 
   useEffect(() => {
@@ -23,7 +28,62 @@ export const ItemList = () => {
 
   useEffect(() => {
     setHiddenGroups([]);
-  }, [user && user.groupBy])
+  }, [user.groupBy]);
+
+  useEffect(() => {
+    if (itemsRes && !itemsRes.error && itemsRes.data) {
+      setLocalItems(itemsRes.data);
+    }
+  }, [itemsRes]);
+
+  const handleLocalUpdate = (id: string, update: ItemProps) => {
+    let items = [...localItems];
+    const affectedItems = items.filter(i => i._id == id);
+
+    if (affectedItems.length == 0) {
+      // No items, add a new one
+      const item = {...update, new: false};
+      items.push(item);
+    }
+    else if (affectedItems.length == 1) {
+      // Modify an existing item
+      const item = {...affectedItems[0], ...update};
+      items.splice(items.indexOf(affectedItems[0]), 1);
+      items.push(item);
+    }
+    
+    setLocalItems(items);
+  }
+
+  const handleLocalDelete = (id: string) => {
+      let items = [...localItems];
+      const affectedItems = items.filter(i => i._id == id);
+
+      if (affectedItems.length == 1) {
+        // Delete an existing item
+        items.splice(items.indexOf(affectedItems[0]), 1);
+      }
+      
+      setLocalItems(items);
+  }
+
+  useEffect(() => {
+    if (addedItem != null) {
+      handleLocalUpdate(addedItem._id, addedItem);
+    }
+  }, [addedItem]);
+
+  useEffect(() => {
+    if (editedItem != null) {
+      handleLocalUpdate(editedItem._id, editedItem);
+    }
+  }, [editedItem]);
+
+  useEffect(() => {
+    if (deletedItem != null) {
+      handleLocalDelete(deletedItem);
+    }
+  }, [deletedItem]);
 
   if (!itemsRes) {
     return <Loading />;
@@ -33,8 +93,8 @@ export const ItemList = () => {
       <Error text={itemsRes.error} />
     )
   }
-  if (itemsRes.data) {
-    let items = [...itemsRes.data] as ItemProps[];
+  if (localItems) {
+    let items = [...localItems] as ItemProps[];
     
     const filterBy = (user && user.filterBy) || null;
     items = filterItems(items, filterBy, user && user.alias);
@@ -64,7 +124,12 @@ export const ItemList = () => {
     if (items.length > 0) {
       return (
         <div className="itemroot">
-          { needsUpdate ? <RefreshData onClick={update} /> : null }
+          { needsUpdate 
+            ? <RefreshData onClick={update} /> 
+            : null }
+          
+          <Item new={true} date={getDate()} />
+          
           { itemsGroups.map(g => {
             const { id, title } = g;
             const isVisible = hiddenGroups.indexOf(id) == -1;
