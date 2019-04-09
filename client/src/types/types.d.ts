@@ -52,7 +52,8 @@ export interface RatingProps {
 export interface PersonProps {
   alias?: string,
   edit?: boolean,
-  onUpdate?: (v: string) => void
+  onUpdate?: (v: string) => void,
+  onBlur?: (v: string) => void
 }
 
 export interface ErrorProps {

@@ -19,7 +19,7 @@ export const Person = (props: PersonProps) => {
         return (
             <div className={"person " + (props.edit ? "edit" : null)}>
                 {!props.edit ? <img src={src} onError={handleError} /> : null }
-                <EditLabel edit={props.edit} value={props.alias} placeholder="Owner alias" onUpdate={props.onUpdate} />
+                <EditLabel edit={props.edit} value={props.alias} placeholder="Owner alias" onBlur={props.onBlur} onUpdate={props.onUpdate} />
             </div>
         )
     }

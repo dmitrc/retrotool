@@ -1,4 +1,4 @@
-import { createElement, useState, useContext } from "react";
+import { createElement, useState, useContext, useEffect } from "react";
 import { ItemProps } from "../types/types";
 import { Person } from "./Person";
 import { Rating } from "./Rating";
@@ -20,8 +20,7 @@ import "./../styles/Item.css";
 export const Item = (props: ItemProps) => {
     const [ edit, setEdit ] = useState(props.new ? true : false);
     const [ user, setUser ] = useContext(UserContext);
-
-    let updateItem: ItemProps = props.new ? {...props} : {};
+    const [ updateItem, setUpdateItem ] = useState(props.new ? {...props} : {});
 
     const handlePin = () => {
         if (props.pinned) {
@@ -81,18 +80,21 @@ export const Item = (props: ItemProps) => {
         if (edit && !props.new) {
             emit("editItem", props._id, updateItem);
             setEdit(false);
+            setUpdateItem({});
         }
         else if (props.new) {
             emit("addItem", updateItem);
 
             // Hacky but needed in order to reset the input fields for the new item
             setEdit(false);
+            setUpdateItem({...props});
             setTimeout(() => { setEdit(true) }, 0);
         }
     }
 
     const handleCancel = () => {
         setEdit(false);
+        setUpdateItem({});
     }
 
     const handleDelete = () => {
@@ -103,35 +105,47 @@ export const Item = (props: ItemProps) => {
     }
 
     const handleTitleUpdate = (v: string) => {
-        updateItem.title = v;
+        const u = {...updateItem};
+        u.title = v;
+        setUpdateItem(u);
     }
 
     const handleDateUpdate = (v: string) => {
-        updateItem.date = v;
+        const u = {...updateItem};
+        u.date = v;
+        setUpdateItem(u);
     }
 
     const handleActionUpdate = (v: string) => {
-        updateItem.actionItem = v;
+        const u = {...updateItem};
+        u.actionItem = v;
+        setUpdateItem(u);
     }
 
     const handleOwnerUpdate = (v: string) => {
-        updateItem.owner = v;
+        const u = {...updateItem};
+        u.owner = v;
+        setUpdateItem(u);
     }
 
     const handleNotesUpdate = (v: string[]) => {
-        updateItem.notes = v;
+        const u = {...updateItem};
+        u.notes = v;
+        setUpdateItem(u);
     }
 
     const handleTagsUpdate = (v: string[]) => {
-        updateItem.tags = (v && v.map(s => s.toLowerCase())) || null;
+        const u = {...updateItem};
+        u.tags = (v && v.map(s => s.toLowerCase())) || null;
+        setUpdateItem(u);
     }
 
     const ownItem = user && user.alias && props.owner && user.alias == props.owner;
     return (
         <div className={"item " + (props.actionItem ? "action " : "") + (props.complete ? "complete " : "") + (props.pinned ? "pinned " : "") + (ownItem ? "own " : "")}>
             <div className="c1">
-                <EditLabel edit={edit} placeholder="Date" value={props.date} className="date" onUpdate={handleDateUpdate} />
-                <Person edit={edit} alias={props.owner} onUpdate={handleOwnerUpdate} />
+                <EditLabel edit={edit} placeholder="Date" value={props.date} className="date" onBlur={handleDateUpdate} />
+                <Person edit={edit} alias={props.owner} onBlur={handleOwnerUpdate} />
                 <div className="spacer" />
                 {!edit ? <Rating onLike={handleLike} onDislike={handleDislike} likes={props.likes} dislikes={props.dislikes} /> : null}
                 <div className="buttons">
@@ -140,19 +154,19 @@ export const Item = (props: ItemProps) => {
             </div>
             
             <div className="c2">  
-                <EditLabel edit={edit} placeholder="Title" value={props.title} className="title" onUpdate={handleTitleUpdate} />
+                <EditLabel edit={edit} placeholder="Title" value={props.title} className="title" onBlur={handleTitleUpdate} />
                 <div className="action">
                     { props.actionItem && !edit ? (
                         <span className="actionDesc">Action item: </span>
                     ): null}
-                    <EditLabel edit={edit} placeholder="Action item" value={props.actionItem} className="actionVal" onUpdate={handleActionUpdate} />
+                    <EditLabel edit={edit} placeholder="Action item" value={props.actionItem} className="actionVal" onBlur={handleActionUpdate} />
                 </div>
 
                 <EditList values={props.notes} edit={edit} className="notes" itemClassName="note" title="Notes" itemPlaceholder="New note" onUpdate={handleNotesUpdate} />
             </div>
             
             <div className="c3">
-                <EditList values={props.tags} edit={edit} className="tags" itemClassName="tag" itemCustomView={Tag as any} itemPlaceholder="New tag"  onUpdate={handleTagsUpdate} />
+                <EditList values={props.tags} edit={edit} className="tags" itemClassName="tag" itemCustomView={Tag as any} itemPlaceholder="New tag" onUpdate={handleTagsUpdate} />
 
                 <div className="buttons">
                     {!edit ? <IconButton icon={MdStar} onClick={handlePin} className="pin" /> : null }
